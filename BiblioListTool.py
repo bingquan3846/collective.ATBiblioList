@@ -80,29 +80,25 @@ class BiblioListTool(UniqueObject, Folder):
         return tuple(formatted_list)
 
     security.declarePrivate('sortList')
-    def sortList(self, objs):
-        """ sorts a list on lastname and publicationyear.
+    def sortList(self, dictlist):
+        """ sorts a list of bibref dictonnaries using two different methods
+            sorting keys: firts author's lastname and publication_year.
         """
-        objs.sort(self.cmpYear)
-        objs.sort(self.cmpLName)
-        return objs
+        tmplist = [(x['publication_year'],x) for x in dictlist]
+        tmplist.sort()
+        dictlist = [y for (x,y) in tmplist]
+        dictlist.sort(self.cmpLName)
+        return dictlist
 
     security.declarePrivate('cmpLName')
-    def cmpLName(self,obj_a,obj_b):
-        """ compares 2 objects on their publication_year
+    def cmpLName(self, dica, dicb):
+        """ compares 2 dictionnaries on their ['author']['lastname']
         """
-        authora=obj_a.get('authors')
-        authorb=obj_b.get('authors')
-        if authora != [] and authorb != []:
-            return cmp(authora[0].get('lastname'),authorb[0].get('lastname'))
+        autha, authb = dica.get('authors'), dicb.get('authors')
+        if autha and authb:
+            return cmp(autha[0].get('lastname'), authb[0].get('lastname'))
         else: 
             return -1
-
-    security.declarePrivate('cmpYear')
-    def cmpYear(self,obj_a,obj_b):
-        """ compares 2 objects on their publication_year
-        """
-        return (obj_a.get('publication_year') > obj_a.get('publication_year'))
 
     security.declarePrivate('formatDicoRef')
     def formatDicoRef(self, refValues, style):
@@ -132,7 +128,7 @@ class BiblioListTool(UniqueObject, Folder):
 
     security.declarePrivate('findBibrefStyles')
     def findBibrefStyles(self):
-        """ used for building style selection vocabularies
+        """ Builds style selection vocabulary
         """
         styles = []
         # portal_bibliolist styles
@@ -151,7 +147,7 @@ class BiblioListTool(UniqueObject, Folder):
 
     security.declarePrivate('getEntryDict')
     def getEntryDict(self, entry):
-        """ 
+        """ transform a BiblioRef Object into python dictionnary
         """
         ref_attributes = ('publication_year',
                           'publication_month',
@@ -196,11 +192,7 @@ class BiblioListTool(UniqueObject, Folder):
             if field:
                 value = getattr(entry, field.accessor)()
                 if not value:
-                    try:
-                        value = field.getDefault()
-                    except TypeError:
-                        # AT1.3 compliant
-                        value = field.getDefault(entry)
+                    value = field.getDefault(entry)
                 try:
                     for x in range(value.len()):
                         value[x] = unicode(value[x],'utf-8')
