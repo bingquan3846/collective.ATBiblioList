@@ -11,7 +11,8 @@
                     field python:here.getField('references_list');
                     uids python:getattr(here, field.edit_accessor)();
                     list_layout here/getListingLayout|nothing;
-                    formatted_list python:bl_tool.formatList(uids, style)" >
+                    t_link here/getLinkToOriginalRef;
+                    formatted_list python:bl_tool.formatList(uids, style, t_link)" >
 
         <h1 tal:content="here/title_or_id" class="documentFirstHeading">
           Title or id
