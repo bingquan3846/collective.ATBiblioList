@@ -59,6 +59,85 @@ msgstr "Gewone Lijst in regels"
 msgid "Table listing"
 msgstr "Tabelvorm"
 
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="context"
+#                   value="Browse..." 
+#XXX: to be translated
+msgid "Browse..."
+msgstr ""
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="standalone" 
+#                   value="Remove reference" 
+#XXX: to be translated
+msgid "Remove reference"
+msgstr ""
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="standalone" 
+#                   value="Remove selected items" 
+#XXX: to be translated
+msgid "Remove selected items"
+msgstr ""
+
+#: popup_bibrefbrowser.pt
+#        <strong><span i18n:translate="heading_bibliofolders">Bibliography Folders</span></strong>
+#XXX: to be translated
+msgid "heading_bibliofolders"
+msgstr "All Bibliography Folders"
+
+#: popup_bibrefbrowser.pt
+#        <strong><span i18n:translate="heading_bibfolder_contents">Folder Contents</span><span>:</span></strong>
+#XXX: to be translated
+msgid "heading_bibfolder_contents"
+msgstr "Folder Contents"
+
+#: bibrefbrowser_macros.pt
+#                       <strong i18n:translate="bibrefbrowser_choose">Choose</strong>
+#XXX: to be translated
+msgid "bibrefbrowser_choose"
+msgstr ""
+
+#: bibrefbrowser_macros.pt
+#                       <strong i18n:translate="bibrefbrowser_add">Add</strong>
+#XXX: to be translated
+msgid "bibrefbrowser_add"
+msgstr ""
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="Close window"
+#XXX: to be translated
+msgid "Close window"
+msgstr "Close window"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="" 
+#                 class="standalone" 
+#                 onclick=""
+#                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+#                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+#                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+#XXX: to be translated
+msgid "Clear Search"
+msgstr "Clear Search"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="" 
+#                 class="standalone" 
+#                 onclick=""
+#                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+#                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+#                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+#XXX: to be translated
+msgid "Back to Folders"
+msgstr "Back to Folders"
+
 #: widget_bibreflist.pt
 #.            <th class="nosort" i18n:translate="header_bibrefs_listing">
 #.              Bibliography References
@@ -230,7 +309,8 @@ msgstr "Inhoud van de filesystem map"
 #: BibliographyList.py
 # references_list
 msgid "label_references_list"
-msgstr "Referenties"
+msgstr "Bibliografische Referenties"
+#XXX: to be modified
 msgid "help_references_list"
 msgstr "Kiest de verwijzingen die u in uw lijst wilt toevoegen/verwijderen."
 
@@ -268,6 +348,7 @@ msgstr "Kies de bibliografische stijl om uw lijst te presenteren voor dit type v
 # refDisplay
 msgid "label_refpresentation_formatandorder"
 msgstr "Formaat"
+#XXX: To be modified
 msgid "help_refpresentation_formatandorder"
 msgstr "Geef het gewenste formaat voor de bibliographische verwijzingen. Om een 'veld' voor te stellen gebruikt u de volgende symbolen: Auteur: %A | Titel: %T | Publicatiemaand: %m | Publicatiejaar: %y | Nieuwsblad: %J | Instelling: %I | Organisatie: %O | Titel van het boek: %B | Paginas: %p | Volumenummer: %v | Nummer: %n | Redacteur(s): %E | Redacteuraanwijzer: %F | Uitgever: %P | Adres: %a | Pmid: %i | Editie/druk: %e | Uitgavewijze: %h | Hoofdstuk: %c | School: %S | Prepublicatie server: %r | Reeks: %s | '%' Symbool: %%"
 

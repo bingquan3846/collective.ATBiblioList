@@ -18,45 +18,114 @@ msgstr ""
 
 # metadata
 msgid "Export Bibliography List"
-msgstr "Export Bibliography List"
+msgstr ""
 
 # status messages
 msgid "Selected references added."
-msgstr "Selected references added."
+msgstr ""
 msgid "No references selected."
-msgstr "No references selected."
+msgstr ""
 msgid "Selected references removed."
-msgstr "Selected references removed."
+msgstr ""
 msgid "Selected references moved up."
-msgstr "Selected references moved up."
+msgstr ""
 msgid "Selected references moved down."
-msgstr "Selected references moved down."
+msgstr ""
 msgid "Selected references were sorted."
-msgstr "Selected references were sorted."
+msgstr ""
 msgid "Your changes have been saved."
-msgstr "Your changes have been saved."
+msgstr ""
 
 # Object names
 msgid "Bibref Custom Style Set"
-msgstr "Bibref Custom Style Set"
+msgstr ""
 msgid "Bibref Custom Style"
-msgstr "Bibref Custom Style"
+msgstr ""
 msgid "Bibref Style"
-msgstr "Bibref Style"
+msgstr ""
 msgid "Bibref Custom Style Folder"
-msgstr "Bibref Custom Style Folder"
+msgstr ""
 msgid "Bibliography List"
-msgstr "Bibliography List"
+msgstr ""
 
 # Displaylist Items
 msgid "Bulleted list"
-msgstr "Bulleted list"
+msgstr ""
 msgid "Ordered list"
-msgstr "Ordered list"
+msgstr ""
 msgid "Simple lines list"
-msgstr "Simple lines list"
+msgstr ""
 msgid "Table listing"
-msgstr "Table listing"
+msgstr ""
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="context"
+#                   value="Browse..." 
+msgid "Browse..."
+msgstr ""
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="standalone" 
+#                   value="Remove reference" 
+msgid "Remove reference"
+msgstr ""
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="standalone" 
+#                   value="Remove selected items" 
+msgid "Remove selected items"
+msgstr ""
+
+#: popup_bibrefbrowser.pt
+#        <strong><span i18n:translate="heading_bibliofolders">Bibliography Folders</span></strong>
+msgid "heading_bibliofolders"
+msgstr "Bibliography Folders"
+
+#: popup_bibrefbrowser.pt
+#        <strong><span i18n:translate="heading_bibfolder_contents">Folder Contents</span><span>:</span></strong>
+msgid "heading_bibfolder_contents"
+msgstr "Folder Contents"
+
+#: bibrefbrowser_macros.pt
+#                       <strong i18n:translate="bibrefbrowser_choose">Choose</strong>
+msgid "bibrefbrowser_choose"
+msgstr ""
+
+#: bibrefbrowser_macros.pt
+#                       <strong i18n:translate="bibrefbrowser_add">Add</strong>
+msgid "bibrefbrowser_add"
+msgstr ""
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="Close window"
+msgid "Close window"
+msgstr "Close window"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="" 
+#                 class="standalone" 
+#                 onclick=""
+#                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+#                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+#                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+msgid "Clear Search"
+msgstr "Clear Search"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="" 
+#                 class="standalone" 
+#                 onclick=""
+#                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+#                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+#                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+msgid "Back to Folders"
+msgstr "Back to Folders"
 
 #: widget_bibreflist.pt
 #            <th class="nosort" i18n:translate="header_bibrefs_listing">
@@ -222,9 +291,9 @@ msgstr "Download"
 #: BibliographyList.py
 # references_list
 msgid "label_references_list"
-msgstr "References"
+msgstr "Bibliographical References"
 msgid "help_references_list"
-msgstr "Search and select references to add to the list or organize/remove listed references."
+msgstr "Click the 'Browse...' button to search/select references and add them to the list, or select references and click the 'Remove selected items' button to remove them from the list. Don't forget to save your changes."
 
 #: BibliographyList.py
 # PresentationStyle
@@ -257,7 +326,7 @@ msgstr "Select the bibliographic style how you want to present your list for thi
 msgid "label_refpresentation_formatandorder"
 msgstr "Format"
 msgid "help_refpresentation_formatandorder"
-msgstr "Format of the bibliographic reference. Place a field using the following way: Author: %A | Title: %T | Publication_month: %m | Publication_year: %y | Journal: %J | Institution: %I | Organisation: %O | Booktitle: %B | Pages: %p | Volume: %v | Number: %n | Editor(s): %E | EditorFlag: %F | Publisher: %P | Adress: %a | Pmid: %i | Edition: %e | Howpublished: %h | Chapter: %c | School: %S | Preprint sever: %r | Series: %s | '%' sign: %%"
+msgstr "Format of the bibliographic reference using the following conventions."
 
 #: BibrefCustomStyle.py
 # nameOrder

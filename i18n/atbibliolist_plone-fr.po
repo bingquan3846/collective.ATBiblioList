@@ -57,6 +57,75 @@ msgstr "Liste simple"
 msgid "Table listing"
 msgstr "Tableau"
 
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="context"
+#                   value="Browse..." 
+msgid "Browse..."
+msgstr "Choisir..."
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="standalone" 
+#                   value="Remove reference" 
+msgid "Remove reference"
+msgstr "Effacer la référence"
+
+#: widget_bibrefbrowser.pt
+#            <input type="button" 
+#                   class="standalone" 
+#                   value="Remove selected items" 
+msgid "Remove selected items"
+msgstr "Effacer les éléments sélectionnés"
+
+#: popup_bibrefbrowser.pt
+#        <strong><span i18n:translate="heading_bibliofolders">Bibliography Folders</span></strong>
+msgid "heading_bibliofolders"
+msgstr "Dossiers bibliographiques"
+
+#: popup_bibrefbrowser.pt
+#        <strong><span i18n:translate="heading_bibfolder_contents">Folder Contents</span><span>:</span></strong>
+msgid "heading_bibfolder_contents"
+msgstr "Folder Contents"
+
+#: bibrefbrowser_macros.pt
+#                       <strong i18n:translate="bibrefbrowser_choose">Choose</strong>
+msgid "bibrefbrowser_choose"
+msgstr "Choisir"
+
+#: bibrefbrowser_macros.pt
+#                       <strong i18n:translate="bibrefbrowser_add">Add</strong>
+msgid "bibrefbrowser_add"
+msgstr "Ajouter"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="Close window"
+msgid "Close window"
+msgstr "Fermer la fenêtre"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="" 
+#                 class="standalone" 
+#                 onclick=""
+#                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+#                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+#                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+msgid "Clear Search"
+msgstr "Annuler la recherche"
+
+#: bibrefbrowser_macros.pt
+#          <input type="button" 
+#                 value="" 
+#                 class="standalone" 
+#                 onclick=""
+#                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+#                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+#                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+msgid "Back to Folders"
+msgstr "Retour aux dossiers"
+
 #: widget_bibreflist.pt
 #.            <th class="nosort" i18n:translate="header_bibrefs_listing">
 #.              Bibliography References
@@ -220,9 +289,9 @@ msgstr "Exporter"
 #: BibliographyList.py
 # references_list
 msgid "label_references_list"
-msgstr "Références"
+msgstr "Références bibliographiques"
 msgid "help_references_list"
-msgstr "Choisissez les références que vous voulez ajouter à la liste ou organisez/supprimez les références de la liste."
+msgstr "Cliquez sur le bouton 'Choisir...' pour sélectionner les références à ajouter à la liste, ou faites une sélection des références à effacer de la liste avant de cliquer sur le bouton 'Effacer les éléments sélectionnés'."
 
 #: BibliographyList.py
 # PresentationStyle
