@@ -30,9 +30,9 @@
                   </td>
                   <td class="bibreflabel">
                     <span tal:replace="structure item/Authors" >Authors</span>
-                    (<span tal:replace="item/publication_year">1900</span>).
-                    <b tal:content="structure item/Title">Title</b>
-                   <span tal:replace="structure item/Source|nothing"/>
+                    (<span tal:replace="item/publication_year">1900</span>).<br />
+                    <b tal:content="structure item/Title">Title</b><br />
+                    <span tal:replace="structure item/Source|nothing"/>
                   </td>
                   <td nowrap="nowrap"
                       tal:define="title python:here.bibrefSelectionLabel(item).replace('\'', '\\\'')">

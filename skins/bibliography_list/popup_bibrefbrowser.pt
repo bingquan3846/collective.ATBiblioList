@@ -51,19 +51,17 @@
     <p/>
 
     <!-- Search form -->
-    <form id="searchform"
+    <form id="popup-searchform"
           action="search"
           method="post"
           name="search"
           tal:attributes="action string:${here/absolute_url}/${template/getId}">
       <fieldset>
         <legend><span i18n:translate="label_quick_search">Search</span></legend>
-        <div class="field">
-          <label i18n:translate="legend_search_terms">Search terms</label><br/>
           <input type="text"
                  id="searchGadget"
                  name="SearchableText"
-                 size="25"
+                 size="35"
                  tabindex=""
                  value=""
                  tal:attributes="value SearchableText;"
@@ -78,20 +76,17 @@
           <a href=""
              tal:attributes="href string:${here/absolute_url}/popup_bibrefsearch?fieldName=$fieldName&at_uid=$at_uid$browse_url_suffix"
              i18n:translate="search_results_advanced_link"> Advanced Search </a>
+          <tal:searchpath condition="browse_uid"><br />
+          <input type="checkbox" name="path" value=""
+                 tal:attributes="value python:'/'.join(bibrefFolderObj.getPhysicalPath())">
+          <label for="path"
+                 i18n:translate="label_search_here_only">Limit search to the current folder</label>
+          </tal:searchpath>
 
-
-        </div>
         <!-- build up the portal_type request so searches only take place within allowed_types -->
         <tal:types tal:condition="python: allowed_types!=[]" tal:repeat="type allowed_types">
           <input type="hidden" name="portal_type:list" value="" tal:attributes="value type" />
         </tal:types>
-        <!-- build up the path request to search only under the specified folder -->
-        <input type="hidden" name="path" value=""
-               tal:define="compl_path string:${portal_url}/${search_path};
-                           portal here/portal_url/getPortalObject;
-                           path python: '/%s/%s' %(portal.getId(), '/'.join(compl_path.split('/')[3:]));"
-               tal:attributes="value path"
-               tal:condition="root"/>
         <!-- add these to make sure that after a search result, we still have these parameters -->
         <input type="hidden" name="fieldName" value="" tal:attributes="value fieldName" />
         <input type="hidden" name="at_uid" value="" tal:attributes="value at_uid" />
@@ -146,8 +141,7 @@
     <div class="field"
          tal:condition="python: not form_submitted and not browse_uid"
          tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder'),sort_on='Date',sort_order='reverse');
-                     bibfolders python:[r for r in bibfolders if r.getObject()];
-                     ">
+                     bibfolders python:[r for r in bibfolders if r.getObject()];">
       <div tal:condition="not:bibfolders"
            i18n:translate="msg_no_bibliofolder">
         There are no existing Bibliography Folders, or you don't have enough permissions to list them.
@@ -192,7 +186,7 @@
 
     <!-- Bibliography Folder Listing-->
     <div class="field"
-         tal:condition="python: not form_submitted and browse_uid"
+         tal:condition="python:not form_submitted and browse_uid"
          tal:define="Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start',0);
                      ">

@@ -24,6 +24,10 @@ dt a {
   margin-bottom: 1em;
 }
 
+#popup-searchbox label {
+  vertical-align: bottom;
+}
+
 #popup-status {
   text-transform: none;
   padding-left: 2px;
@@ -74,10 +78,6 @@ img.typeIcon {
 .discreet {
   font-color: &dtml-discreetColor;;
   color: rgb(175,175,175);
-}
-
-.MarscatAddCell {
-  text-align: right;
 }
 
 

@@ -31,9 +31,15 @@
       <link rel="stylesheet" type="text/css"
         media="screen" href=""
         tal:attributes="href string:$portal_url/popupbrowser.css" />
+      <script type="text/javascript"
+              tal:attributes="src string:$portal_url/plone_javascript_variables.js">
+      </script>
+      <script type="text/javascript"
+              tal:attributes="src string:$portal_url/plone_javascripts.js">
+      </script>
   </head>
 
-  <body onload="focus()">
+  <body>
 
   <div id="content"
        tal:define="allowed_types python:list(field.allowed_types);
@@ -150,7 +156,79 @@
 
                 <input type="hidden" name="created_usage" value="range:min" />
             </div>
-    
+
+            <div class="field"
+                 tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder'),sort_on='Date',sort_order='reverse');
+                             bibfolders python:[r.getObject() for r in bibfolders if r.getObject()];"
+                 tal:condition="bibfolders">
+                <label i18n:translate="label_search_in_folder">In Folder</label>
+
+                <div class="formHelp" i18n:translate="help_search_in_folder">
+                Return items contained in a specific folder.
+                </div>
+
+<!-- single path
+                <select id="searchContext" name="path">
+                  <option value="" selected="selected"
+                          i18n:translate="label_search_all_site">all site</option>
+                  <tal:bibfolders repeat="bibfolder bibfolders">
+                    <option value=""
+                            tal:attributes="value python:'/'.join(bibfolder.getPhysicalPath());">
+                      <span tal:replace="bibfolder/title_or_id" />
+                    </option>
+                  </tal:bibfolders>
+                </select>
+-->
+                <span class="optionsToggle" tal:define="tabindex tabindex/next">
+                    <input type="checkbox"
+                           onclick="javascript:toggleSelect(this, 'path:list', true);"
+                           name="bf_toggle"
+                           value="#"
+                           id="bf_toggle"
+                           class="noborder"
+                           tabindex=""
+                           checked="checked"
+                           tal:attributes="tabindex tabindex;"/>
+                    <label for="bf_toggle"
+                           i18n:translate="label_toggle"
+                           >Select All/None
+                    </label>
+                </span>
+                <br />
+                <tal:bibfolders repeat="bibfolder bibfolders">
+                    <tal:tabindex define="tabindex tabindex/next;">
+                    <input type="checkbox"
+                           name="path:list"
+                           value="#"
+                           class="noborder"
+                           checked="checked"
+                           tabindex=""
+                           tal:attributes="value python:'/'.join(bibfolder.getPhysicalPath());
+                                           tabindex tabindex;
+                                           id string:${bibfolder/getId}_${tabindex}"/>
+                    <label for=""
+                           tal:attributes="for string:${bibfolder/getId}_${tabindex}"
+                           tal:define="breadcrumbs python:portal.breadcrumbs(bibfolder)">
+                      <span tal:replace="bibfolder/title_or_id" />
+                      <span style="font-weight: normal;">
+                      (<span i18n:translate="tabs_home" tal:omit-tag="">Home</span>
+                      &raquo;
+                      <tal:crumb repeat="crumb python:breadcrumbs[1:-1]">
+                        <tal:last tal:define="is_last repeat/crumb/end">
+                        <span tal:omit-tag="python:not crumb[1]" i18n:translate=""
+                              tal:content="python:crumb[0]">
+                          crumb</span><span tal:condition="is_last" tal:omit-tag="">)</span>
+                        <span tal:condition="not:is_last" tal:omit-tag="">&raquo;</span>
+                        </tal:last>
+                      </tal:crumb>
+                      </span>
+
+                    </label>
+                    <br />
+                    </tal:tabindex>
+                </tal:bibfolders>
+            </div>
+
             <div class="field" tal:define="portal_types portal/portal_types;">
                 <label i18n:translate="label_item_type">Item type</label>
 
@@ -195,7 +273,7 @@
                     </tal:tabindex>
                 </tal:contenttypes>
             </div>
-    
+
             <div class="field">
                 <label for="Creator" i18n:translate="label_author">Author</label>
 
@@ -222,6 +300,7 @@
                 </tal:creators>
             </div>
     
+<!-- review state (not usefull here)
             <div class="field"
                  tal:condition="python: checkPermission('Review portal content', here)">
     
@@ -269,6 +348,7 @@
                     </metal:block>
                 </tal:states>
             </div>
+-->
 
             <div class="formControls">
                 <input class="context"
@@ -281,13 +361,6 @@
                        />
             </div>
 
-        <!-- build up the path request to search only under the specified folder -->
-        <input type="hidden" name="path" value=""
-               tal:define="compl_path string:${portal_url}/${search_path};
-                           portal here/portal_url/getPortalObject;
-                           path python: '/%s/%s' %(portal.getId(), '/'.join(compl_path.split('/')[3:]));"
-               tal:attributes="value path"
-               tal:condition="root"/>
         <!-- add these to make sure that after a search result, we still have these parameters -->
         <input type="hidden" name="fieldName" value="" tal:attributes="value fieldName" />
         <input type="hidden" name="at_uid" value="" tal:attributes="value at_uid" />
