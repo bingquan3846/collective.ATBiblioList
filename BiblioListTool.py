@@ -76,29 +76,8 @@ class BiblioListTool(UniqueObject, Folder):
         objs = [at_tool.lookupObject(uid) for uid in uids]
         uflist = [self.getEntryDict(obj) for obj in objs]
         formatted_list = [self.formatDicoRef(obj, style)
-                          for obj in self.sortList(uflist)]
+                          for obj in self.sortBibrefDictList(uflist)]
         return tuple(formatted_list)
-
-    security.declarePrivate('sortList')
-    def sortList(self, dictlist):
-        """ sorts a list of bibref dictonnaries using two different methods
-            sorting keys: firts author's lastname and publication_year.
-        """
-        tmplist = [(x['publication_year'],x) for x in dictlist]
-        tmplist.sort()
-        dictlist = [y for (x,y) in tmplist]
-        dictlist.sort(self.cmpLName)
-        return dictlist
-
-    security.declarePrivate('cmpLName')
-    def cmpLName(self, dica, dicb):
-        """ compares 2 dictionnaries on their ['author']['lastname']
-        """
-        autha, authb = dica.get('authors'), dicb.get('authors')
-        if autha and authb:
-            return cmp(autha[0].get('lastname'), authb[0].get('lastname'))
-        else: 
-            return -1
 
     security.declarePrivate('formatDicoRef')
     def formatDicoRef(self, refValues, style):
