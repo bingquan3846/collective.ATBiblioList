@@ -291,7 +291,7 @@ msgstr "Exporter"
 msgid "label_references_list"
 msgstr "Références bibliographiques"
 msgid "help_references_list"
-msgstr "Cliquez sur le bouton 'Choisir...' pour sélectionner les références à ajouter à la liste, ou faites une sélection des références à effacer de la liste avant de cliquer sur le bouton 'Effacer les éléments sélectionnés'."
+msgstr "Cliquez sur le bouton 'Choisir...' pour sélectionner les références à ajouter à la liste. Pour effacer des références de la liste, sélectionnez-les (utilisez ctrl/click pour un choix multiple) et cliquez sur le bouton 'Effacer les éléments sélectionnés'. N'oubliez pas de sauvegarder vos modifications."
 
 #: BibliographyList.py
 # PresentationStyle

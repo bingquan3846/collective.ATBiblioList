@@ -301,31 +301,28 @@ msgstr "Inhoud van de filesystem map"
 msgid "label_references_list"
 msgstr "Bibliografische Referenties"
 msgid "help_references_list"
-msgstr "Klik op de knop 'Selecteer' om de zo gekozen referenties aan de lijst toe te voegen, of selecteer de te wissen referenties en klik op de knop 'Geselecteerde voorwerpen verwijderen'."
+msgstr "Klik op de knop 'Selecteer' om referenties op te zoeken en aan de lijst toe te voegen,Om referenties van de lijst te verwijderen selecteer de te wissen referenties (gebruik CTRL click voor meerdere ineens te selecteren) en klik op de knop 'Geselecteerde voorwerpen verwijderen'. Vergeet niet uw aanpassingen op te slaan."
 
 #: BibliographyList.py
 # PresentationStyle
 msgid "label_bibliolist_presentation"
-msgstr "Bibliographische stijl"
-#XXX_modified
+msgstr "Lay-out stijl"
 msgid "help_bibliolist_presentation"
-msgstr "Kies de stijl om uw lijst te tonen."
+msgstr "Bibliografische Presentatiestijl."
 
 #: BibliographyList.py
 # ListingLayout
 msgid "label_bibliolist_listing_layout"
 msgstr "Stijl van de lijst"
-#XXX_modified
 msgid "help_bibliolist_listing_layout"
-msgstr "Hoe de lijst getoond wordt in het in het zichtpagina."
+msgstr "Formatering van de lijst."
 
 #: BibliographyList.py
 # linkToOriginalRef
-#XXX_new
 msgid "label_bibliolist_linkToOriginalRef"
-msgstr ""
+msgstr "Link naar oorspronkelijke referentie"
 msgid "help_bibliolist_linkToOriginalRef"
-msgstr ""
+msgstr "Moet de titel van de referentie een link naar de referentie zelf zijn?"
 
 #: BibrefCustomStyleSet.py
 # DefaultStyle

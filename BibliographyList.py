@@ -70,7 +70,7 @@ schema = NewSchema + Schema((
                    widget=BibrefBrowserWidget(label="Bibliographical References",
                       label_msgid="label_references_list",
                       description_msgid="help_references_list",
-                      description="Click the 'Browse...' button to search/select references and add them to the list, or select references and click the 'Remove selected items' button to remove them from the list. Don't forget to save your changes.",
+                      description="Click the 'Browse...' button to search/select references and add them to the list. To remove references from the list, select them (use ctrl/click for multiple selection) and click the 'Remove selected items' button. Don't forget to save your changes.",
                       i18n_domain="plone",
                       ),
                    ),

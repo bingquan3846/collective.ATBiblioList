@@ -293,7 +293,7 @@ msgstr "Download"
 msgid "label_references_list"
 msgstr "Bibliographical References"
 msgid "help_references_list"
-msgstr "Click the 'Browse...' button to search/select references and add them to the list, or select references and click the 'Remove selected items' button to remove them from the list. Don't forget to save your changes."
+msgstr "Click the 'Browse...' button to search/select references and add them to the list. To remove references from the list, select them (use ctrl/click for multiple selection) and click the 'Remove selected items' button. Don't forget to save your changes."
 
 #: BibliographyList.py
 # PresentationStyle
