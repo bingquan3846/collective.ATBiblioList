@@ -86,7 +86,7 @@ msgstr "Dossiers bibliographiques"
 #: popup_bibrefbrowser.pt
 #        <strong><span i18n:translate="heading_bibfolder_contents">Folder Contents</span><span>:</span></strong>
 msgid "heading_bibfolder_contents"
-msgstr "Folder Contents"
+msgstr "Contenu du dossier"
 
 #: bibrefbrowser_macros.pt
 #                       <strong i18n:translate="bibrefbrowser_choose">Choose</strong>
@@ -324,7 +324,7 @@ msgstr "Style bibliographique pour ce type de référence."
 msgid "label_refpresentation_formatandorder"
 msgstr "Format"
 msgid "help_refpresentation_formatandorder"
-msgstr "Format désiré pour les références bibliographiques. Pour noter une donnée, utilisez les prochains paramètres: Auteur: %A | Titre: %T | Mois de publication: %m | Année de publication: %y | Journal: %J | Institution: %I | Organisation: %O | titre du livre: %B | Pages: %p | Volume: %v | Numéro: %n | Rédacteur(s): %E | indicateur de rédacteur: %F | Éditeur: %P | Adresse: %a | Pmid: %i | Édition: %e | Moyen de publication: %h | Chapitre: %c | École: %S | Référence de prépublication: %r | Séries: %s | '%' Symbole: %%"
+msgstr "Format désiré pour les références bibliographiques."
 
 #: BibrefCustomStyle.py
 # nameOrder

@@ -326,7 +326,7 @@ msgstr "Select the bibliographic style how you want to present your list for thi
 msgid "label_refpresentation_formatandorder"
 msgstr "Format"
 msgid "help_refpresentation_formatandorder"
-msgstr "Format of the bibliographic reference using the following conventions."
+msgstr "Format of the bibliographic reference."
 
 #: BibrefCustomStyle.py
 # nameOrder
