@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=dictlist=()
+##parameters=dictlist=[]
 ##title=sortBibrefDictList
 ##
 
@@ -18,11 +18,11 @@ tmplist.sort()
 dictlist = [y for (x,y) in tmplist]
 
 # method 2: authors[0]['lastname']
-def cmpLName(self, dica, dicb):
+def cmpLName(dica, dicb):
     autha, authb = dica.get('authors'), dicb.get('authors')
     if autha and authb:
         return cmp(autha[0].get('lastname'), authb[0].get('lastname'))
     return -1
-dictlist.sort(self.cmpLName)
+dictlist.sort(cmpLName)
 
 return dictlist
