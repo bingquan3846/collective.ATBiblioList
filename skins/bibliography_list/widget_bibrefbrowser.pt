@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+  <head><title></title></head>
+
+  <body>
+
+    <metal:view_macro define-macro="view">
+      <div metal:use-macro="here/widgets/reference/macros/view" />
+    </metal:view_macro>
+
+    <metal:edit_macro define-macro="edit">
+      <metal:use use-macro="field_macro | here/widgets/field/macros/edit">
+
+        <div metal:fill-slot="widget_body"
+             tal:define="multiVal field/multiValued;
+                         fieldName python:fieldName;
+                         uids python:same_type(value, []) and value or [value];
+                         types_param python:','.join(field.allowed_types)
+                         ">
+
+          <input type="hidden"
+                 value=""
+                 tal:condition="python:not field.required and multiVal"
+                 tal:attributes="name string:$fieldName:default:list"
+                 />
+
+          <tal:single condition="not: multiVal" >
+            <tal:value condition="value">
+              <tal:block define="obj python:here.reference_catalog.lookupObject(value)">
+                <input size=""
+                       type="text"
+                       value=""
+                       id=""
+                       readonly="readonly"
+                       tal:attributes="value obj/title_or_id;
+                                       tabindex tabindex/next;
+                                       id string:${fieldName}_label" />
+              </tal:block>
+            </tal:value>
+              <input type="text"
+                     size="50"
+                     id=""
+                     value="No reference set. Click the browse button to select."
+                     readonly="readonly"
+                     i18n:attributes="value"
+                     tal:condition="not:value"
+                     tal:attributes="id string:${fieldName}_label"/>
+              <input type="hidden"
+                     value=""
+                     name=""
+                     tal:attributes="name fieldName;
+                                     value value;
+                                     id string:${fieldName}" />
+          </tal:single>
+
+          <tal:multi condition="multiVal" 
+                     define="targets python:[(here.reference_catalog.lookupObject(u),u) for u in uids if u]">
+            <select multiple="multiple"
+                    tabindex=""
+                    tal:attributes="name string:${fieldName}:list;
+                                    id string:${fieldName};
+                                    tabindex tabindex/next;">
+              <tal:block repeat="set targets">
+                <option value=""
+                        selected="selected"
+                        tal:attributes="value python:set[1];"
+                        tal:content="structure python:here.bibrefSelectionLabel(set[0])">option</option>
+              </tal:block>
+            </select>
+          </tal:multi>
+
+          <div>
+            <input type="button" 
+                   class="context"
+                   value="Browse..." 
+                   onClick=""
+                   i18n:attributes="value"
+                   tal:attributes="onClick string:javascript:bibrefbrowser_openBrowser('${here/absolute_url}','${fieldName}','${here/UID}')" />
+            <input type="button" 
+                   class="standalone" 
+                   value="Remove reference" 
+                   onClick=""
+                   i18n:attributes="value"
+                   tal:condition="not:field/multiValued"
+                   tal:attributes="onClick string:javascript:bibrefbrowser_clearReference('${fieldName}')" />
+            <input type="button" 
+                   class="standalone" 
+                   value="Remove selected items" 
+                   onClick=""
+                   i18n:attributes="value"
+                   tal:condition="field/multiValued"
+                   tal:attributes="onClick string:javascript:bibrefbrowser_removeReference('${fieldName}')" />
+          </div>
+        </div>
+      </metal:use>
+    </metal:edit_macro>
+
+    <metal:search_macro define-macro="search">
+      <div metal:use-macro="here/widgets/reference/macros/search" />
+    </metal:search_macro>
+  </body>
+</html>

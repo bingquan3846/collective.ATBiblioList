@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<metal:block use-macro="here/global_defines/macros/defines" />
+<metal:popup_globaldefine
+      tal:define="
+        global at_uid python:here.REQUEST.get('at_uid');
+        global fieldName python:here.REQUEST.get('fieldName');
+        global at_obj python:here.reference_catalog.lookupObject(at_uid);
+        global field python:at_obj.Schema()[fieldName];
+        global widget python:field.widget;" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone"
+      tal:attributes="lang default_language|default;
+                      xml:lang default_language|default;">
+
+  <head tal:define="ztu modules/ZTUtils;">
+      <title tal:content="widget/label">title</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+            tal:define="charset here/portal_properties/site_properties/default_charset;
+                        dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
+            tal:attributes="content string:text/html;;charset=${charset}" />
+      <style type="text/css" media="all"
+             tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
+             tal:content="string: @import url(${here/portal_url}/plone.css?${current_skin});">
+      </style>
+      <link rel="stylesheet" type="text/css"
+        media="screen" href=""
+        tal:attributes="href string:$portal_url/popupbrowser.css" />
+  </head>
+
+  <body onload="focus()">
+
+  <div id="content"
+       tal:define="allowed_types python:list(field.allowed_types);
+                   search_path widget/root;
+                   SearchableText python:request.get('SearchableText');
+                   query_results python:[brain.getObject() for brain in here.queryCatalog()];
+                   form_submitted python:request.get('form_submitted');
+                   browse_uid python:request.get('browse_uid');
+                   browse_url_suffix python:test(browse_uid, '&browse_uid=%s' %browse_uid, '');
+                   bibrefFolderObj python:here.archetype_tool.lookupObject(browse_uid);
+                   Batch python:modules['Products.CMFPlone'].Batch;
+                   b_start python:request.get('b_start',0);">
+
+    <h1 tal:content="python:widget.Label(at_obj)">Widget Label</h1>
+    <p/>
+
+    <!-- Search form -->
+    <form id="searchform"
+          action="search"
+          method="post"
+          name="search"
+          tal:attributes="action string:${here/absolute_url}/${template/getId}">
+      <fieldset>
+        <legend><span i18n:translate="label_quick_search">Search</span></legend>
+        <div class="field">
+          <label i18n:translate="legend_search_terms">Search terms</label><br/>
+          <input type="text"
+                 id="searchGadget"
+                 name="SearchableText"
+                 size="25"
+                 tabindex=""
+                 value=""
+                 tal:attributes="value SearchableText;"
+                 />
+          <input tabindex=""
+                 class="searchButton"
+                 type="submit"
+                 name="submit"
+                 value="Search"
+                 i18n:attributes="value"
+                 />
+          <a href=""
+             tal:attributes="href string:${here/absolute_url}/popup_bibrefsearch?fieldName=$fieldName&at_uid=$at_uid$browse_url_suffix"
+             i18n:translate="search_results_advanced_link"> Advanced Search </a>
+
+
+        </div>
+        <!-- build up the portal_type request so searches only take place within allowed_types -->
+        <tal:types tal:condition="python: allowed_types!=[]" tal:repeat="type allowed_types">
+          <input type="hidden" name="portal_type:list" value="" tal:attributes="value type" />
+        </tal:types>
+        <!-- build up the path request to search only under the specified folder -->
+        <input type="hidden" name="path" value=""
+               tal:define="compl_path string:${portal_url}/${search_path};
+                           portal here/portal_url/getPortalObject;
+                           path python: '/%s/%s' %(portal.getId(), '/'.join(compl_path.split('/')[3:]));"
+               tal:attributes="value path"
+               tal:condition="root"/>
+        <!-- add these to make sure that after a search result, we still have these parameters -->
+        <input type="hidden" name="fieldName" value="" tal:attributes="value fieldName" />
+        <input type="hidden" name="at_uid" value="" tal:attributes="value at_uid" />
+        <input type="hidden" name="browse_uid" value="" tal:attributes="value browse_uid" />
+        <input type="hidden" name="form_submitted" value="1" />
+      </fieldset>
+    </form>
+
+    <!-- Status bar -->
+    <div id="popup-status"
+         tal:condition="form_submitted">
+        <img alt="" tal:define="icon string:${here/portal_url}/search_icon.gif" 
+                    tal:attributes="src icon" />
+        <strong><span i18n:translate="heading_search_results">Search Results</span></strong>
+    </div>
+
+    <div id="popup-status"
+         tal:condition="python: not form_submitted and not browse_uid">
+        <strong><span i18n:translate="heading_bibliofolders">Bibliography Folders</span></strong>
+    </div>
+
+    <div id="popup-status"
+         tal:condition="python: not form_submitted and browse_uid"
+         tal:define="breadcrumbs python:portal.breadcrumbs(bibrefFolderObj);">
+        <img alt="" tal:define="iconname python:bibrefFolderObj.getIcon(1);
+                                icon python:here.portal_url() + '/' + iconname" 
+                    tal:attributes="src icon" />
+        <strong><span i18n:translate="heading_bibfolder_contents">Folder Contents</span><span>:</span></strong>
+        <span i18n:translate="tabs_home"> Home </span>
+        <span class="breadcrumbSeparator">&raquo;</span>
+        <tal:list repeat="crumb python:breadcrumbs[1:-1]">
+          <tal:last tal:define="is_last repeat/crumb/end">
+            <span tal:content="python:crumb[0]" i18n:translate="">crumb</span>
+            <span class="breadcrumbSeparator" tal:condition="not: is_last"> &raquo; </span>
+          </tal:last>
+        </tal:list>
+    </div>
+
+    <!-- search results -->
+    <div class="documentDescription"
+         tal:condition="python: form_submitted and not query_results">
+      <strong i18n:translate="">No items found.</strong>
+    </div>
+
+    <div class="field"
+         tal:condition="query_results"
+         tal:define="results query_results">
+        <metal:bibref_chooser use-macro="here/bibrefbrowser_macros/macros/bibrefs_table_chooser" />
+    </div>
+
+    <!-- Bibliography Folders Browsing -->
+    <div class="field"
+         tal:condition="python: not form_submitted and not browse_uid"
+         tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder'),sort_on='Date',sort_order='reverse');
+                     bibfolders python:[r for r in bibfolders if r.getObject()];
+                     ">
+      <div tal:condition="not:bibfolders"
+           i18n:translate="msg_no_bibliofolder">
+        There are no existing Bibliography Folders, or you don't have enough permissions to list them.
+      </div>
+      <tal:results define="batch python:Batch(bibfolders, 5, int(b_start), orphan=0)"
+                   condition="bibfolders">
+        <dl>
+          <tal:batch repeat="result batch">
+            <tal:bibfolder define="resultObject result/getObject;
+                                   resultuid resultObject/UID;
+                                   resulturl string:${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid&browse_uid=$resultuid;
+                                   resulticon python:resultObject.getIcon(1)">
+            <dt>
+              <a href="" 
+                 tal:attributes="href resulturl">
+                 <img src="" alt=""
+                      tal:attributes="src string:${utool}/${resulticon};
+                                      alt here/title_or_id"/></a>
+              <a href="" 
+                 tal:attributes="href resulturl">
+                 <span tal:replace="resultObject/title_or_id">Bibref Folder Title</span></a>
+            </dt>
+            <dd tal:define="breadcrumbs python:portal.breadcrumbs(resultObject)">
+              <span i18n:translate="tabs_home" tal:omit-tag=""> Home </span>
+              <span class="breadcrumbSeparator">&raquo;</span>
+              <span tal:repeat="crumb python:breadcrumbs[1:-1]">
+                <tal:last tal:define="is_last repeat/crumb/end">
+                  <span tal:omit-tag="python:not crumb[1]" i18n:translate=""
+                        tal:content="python:crumb[0]">crumb</span>
+                  <span class="breadcrumbSeparator" tal:condition="not: is_last"> &raquo; </span>
+                </tal:last>
+              </span>
+              (<span tal:replace="resultObject/absolute_url" />)<br tal:condition="resultObject/Description"/>
+              <span tal:content="structure python:test(resultObject.Description(), resultObject.Description(), '&nbsp;')"> description </span>
+            </dd>
+            </tal:bibfolder>
+          </tal:batch>
+        </dl>
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+      </tal:results>
+    </div>
+
+    <!-- Bibliography Folder Listing-->
+    <div class="field"
+         tal:condition="python: not form_submitted and browse_uid"
+         tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+                     b_start python:request.get('b_start',0);
+                     ">
+      <div tal:condition="not:bibrefFolderObj/listFolderContents"
+           i18n:translate="msg_no_bibrefs">
+        There are no existing Bibliography References in this folder, or you don't have enough permissions to list them.
+      </div>
+
+      <tal:results define="bibrefs python:bibrefFolderObj.listFolderContents();
+                           sort_on python:(('Authors', 'nocase', 'asc'),('publication_year', 'cmp', 'desc'));
+                           results python:sequence.sort(bibrefs, sort_on);"
+                   condition="results">
+        <metal:bibref_chooser use-macro="here/bibrefbrowser_macros/macros/bibrefs_table_chooser" />
+      </tal:results>
+    </div>
+
+    <div metal:use-macro="here/bibrefbrowser_macros/macros/bibrefs_popup-buttons" />
+
+<!-- <div tal:content="structure request"/> -->
+
+    </div>
+  </body>
+</html>

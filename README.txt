@@ -94,19 +94,23 @@ Changes
 
   * Sort lists by 1st Author name and publication year.
 
-  * complete translation (i18n) support.
+  * Complete translation (i18n) support.
 
   * Added security declarations where needed.
 
   * Better Documentation.
 
+  Version 0.4
+
+  * Adapted ATReferenceBrowserWidget for choosing Biblio References to add to the list. References can now be found using an extended search form.
+
+  * Adapted translation files (i18n) and the manual accordingly.
+
+  * Moved the BiblioList sorting process (at display time) to the skins, so that it can be customized either on the File System or Through the web from the ZMI. see skins/bibliography_list/sortBibrefDictList.py .
+
 To Do
 
-  * Batch view for references widget.
-
-  * Reference Browser support (ATReferenceBrowserWidget might be useful here).
-
-  * Unit testing !!
+  * Write unit tests !!
 
   * Export formatted lists in rtf.
 
@@ -117,7 +121,4 @@ Very possible future:
 
   * As suggested by a few testers/users, a 'very nice to have' functionnality of a bibliolist is to let the list be dynamically updated, based on previous search criteria.
     I think the best way to implement such a functionnality would be to make the BiblioList behave like cmf topics do.
-
-  * For now, the search mechanism queries the portal catalog based on the SearchableText attribute. It was asked (by sarah and others) to let the user perform a search based on other criteria (like metadata). I believe that this will naturally be possible if the product behaves like a topic. If not, the search widget will be modified to extend the search possibilities.
-
 

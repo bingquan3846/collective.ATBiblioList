@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<metal:block use-macro="here/global_defines/macros/defines" />
+<metal:popup_globaldefine
+      tal:define="
+        global at_uid python:here.REQUEST.get('at_uid');
+        global fieldName python:here.REQUEST.get('fieldName');
+        global at_obj python:here.reference_catalog.lookupObject(at_uid);
+        global field python:at_obj.Schema()[fieldName];
+        global widget python:field.widget;" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone"
+      tal:attributes="lang default_language|default;
+                      xml:lang default_language|default;">
+
+  <head tal:define="ztu modules/ZTUtils;">
+      <title tal:content="widget/label">title</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+            tal:define="charset here/portal_properties/site_properties/default_charset;
+                        dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
+            tal:attributes="content string:text/html;;charset=${charset}" />
+      <style type="text/css" media="all"
+             tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
+             tal:content="string: @import url(${here/portal_url}/plone.css?${current_skin});">
+      </style>
+      <link rel="stylesheet" type="text/css"
+        media="screen" href=""
+        tal:attributes="href string:$portal_url/popupbrowser.css" />
+  </head>
+
+  <body onload="focus()">
+
+  <div id="content"
+       tal:define="allowed_types python:list(field.allowed_types);
+                   search_path widget/root;
+                   SearchableText python:request.get('SearchableText');
+                   query_results python:[brain.getObject() for brain in here.queryCatalog()];
+                   form_submitted python:request.get('form_submitted');
+                   browse_uid python:request.get('browse_uid');
+                   browse_url_suffix python:test(browse_uid, '&browse_uid=%s' %browse_uid, '');
+                   bibrefFolderObj python:here.archetype_tool.lookupObject(browse_uid);
+                   Batch python:modules['Products.CMFPlone'].Batch;
+                   b_start python:request.get('b_start',0);">
+
+    <h1 i18n:translate="search_results_advanced_link">Advanced Search</h1>
+    <p/>
+
+    <form id="searchform"
+          action="search"
+          method="post"
+          name="search"
+          tal:attributes="action string:${here/absolute_url}/popup_bibrefbrowser">
+
+            <div class="field">
+                <label for="SearchableText" i18n:translate="label_search_text">Search Text</label>
+
+                <div class="formHelp" i18n:translate="help_search_text">
+                For a simple text search, enter your search term
+                here. Multiple words may be found by combining
+                them with <strong>AND</strong> and <strong>OR</strong>.
+                The text in this field will be matched with
+                items' contents, title and description.
+                </div>
+
+                <input type="text"
+                       id="SearchableText"
+                       name="SearchableText"
+                       size="25"
+                       tabindex=""
+                       tal:attributes="tabindex tabindex/next;"
+                       />
+            </div>
+
+            <div class="field">
+                <label for="Title" i18n:translate="label_title">Title</label>
+
+                <div class="formHelp" i18n:translate="help_search_title">
+                Return items matching this title.
+                </div>
+
+                <input type="text"
+                       id="Title"
+                       name="Title"
+                       size="25"
+                       tabindex=""
+                       tal:attributes="tabindex tabindex/next;"
+                       />
+            </div>
+
+            <div class="field"
+                 tal:define="usedSubjects python:here.portal_catalog.uniqueValuesFor('Subject');"
+                 tal:condition="usedSubjects">
+                <label for="Subject" i18n:translate="label_keywords">Keywords</label>
+
+                <div class="formHelp" i18n:translate="help_search_keywords">
+                Return items matching one or more of these keywords.
+                Multiple words may be found
+                by pressing <strong>Ctrl</strong> while
+                <strong>left clicking</strong> the keywords.
+                </div>
+
+                <select name="Subject:list"
+                        id="Subject"
+                        size="7"
+                        multiple="multiple"
+                        tabindex=""
+                        tal:attributes="tabindex tabindex/next;"
+                        >
+                    <option value="#"
+                            tal:repeat="subject usedSubjects"
+                            tal:content="subject"
+                            tal:attributes="value subject"
+                            i18n:domain="plone-metadata"
+                            i18n:translate=""
+                            >dummy</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="created" i18n:translate="label_new_items_since">New items since</label>
+
+                <div class="formHelp" i18n:translate="help_search_new_items_since">
+                Return items added since you were last logged on, the last week, etc.
+                </div>
+    
+                <tal:datetime define="today python:DateTime().earliestTime()">
+                <select name="created:date"
+                        id="created"
+                        tabindex=""
+                        tal:attributes="tabindex tabindex/next;"
+                        tal:define="yesterday python:(today-1).Date();
+                                    lastweek python:(today-7).Date();
+                                    lastmonth python:(today-31).Date();
+                                    ever string:1970/02/01 00:00:00 GMT;">
+                    <option value="#"
+                            tal:condition="not: isAnon"
+                            tal:attributes="value python:member.getProperty('last_login_time')"
+                            i18n:translate="last_login">Last log-in</option>
+                    <option value="#" tal:attributes="value yesterday" i18n:translate="time_yesterday"> Yesterday </option>
+                    <option value="#" tal:attributes="value lastweek" i18n:translate="time_last_week"> Last week </option>
+                    <option value="#" tal:attributes="value lastmonth" i18n:translate="time_last_month"> Last month </option>
+                    <option value="#" tal:attributes="value ever" selected="selected" i18n:translate="time_ever"> Ever </option>
+                </select>
+                </tal:datetime>
+
+                <input type="hidden" name="created_usage" value="range:min" />
+            </div>
+    
+            <div class="field" tal:define="portal_types portal/portal_types;">
+                <label i18n:translate="label_item_type">Item type</label>
+
+                <div class="formHelp" i18n:translate="help_search_item_type">
+                Return items of a specific type.
+                </div>
+    
+                <span class="optionsToggle" tal:define="tabindex tabindex/next">
+                    <input type="checkbox"
+                           onclick="javascript:toggleSelect(this, 'portal_type:list', true);"
+                           name="pt_toggle"
+                           value="#"
+                           id="pt_toggle"
+                           class="noborder"
+                           tabindex=""
+                           checked="checked"
+                           tal:attributes="tabindex tabindex;"/>
+                    <label for=""
+                           i18n:translate="label_toggle"
+                           tal:attributes="for string:pt_toggle"
+                           >Select All/None
+                    </label>
+                </span>
+                <br />
+                <tal:contenttypes repeat="type allowed_types">
+                    <tal:tabindex define="tabindex tabindex/next">
+                    <input type="checkbox"
+                           name="portal_type:list"
+                           value="#"
+                           class="noborder"
+                           checked="checked"
+                           tabindex=""
+                           tal:attributes="value type;
+                                           tabindex tabindex;
+                                           id string:portal_type_${tabindex}"/>
+                    <label for=""
+                           i18n:translate=""
+                           tal:attributes="for string:portal_type_${tabindex}"
+                           tal:content="python: portal_types.getTypeInfo(type).Title()"
+                           />
+                    <br />
+                    </tal:tabindex>
+                </tal:contenttypes>
+            </div>
+    
+            <div class="field">
+                <label for="Creator" i18n:translate="label_author">Author</label>
+
+                <div class="formHelp" i18n:translate="help_search_author">
+                Return items created by a particular person.
+                </div>
+    
+                <tal:creators tal:define="creators python:portal.portal_catalog.uniqueValuesFor('Creator')">
+                    <select name="Creator"
+                            id="Creator"
+                            tabindex=""
+                            tal:attributes="tabindex tabindex/next;"
+                            tal:condition="python: len(creators) &lt;= 30">
+                        <option value="" i18n:translate="label_any_author">Any Author</option>
+                        <metal:block tal:repeat="creator creators">
+                            <option value="" tal:attributes="value creator" tal:content="creator"> username </option>
+                        </metal:block>
+                    </select>
+    
+                    <input name="Creator"
+                           tabindex=""
+                           tal:attributes="tabindex tabindex/next;"
+                           tal:condition="python: len(creators) &gt; 30 " />
+                </tal:creators>
+            </div>
+    
+            <div class="field"
+                 tal:condition="python: checkPermission('Review portal content', here)">
+    
+                <label for="review_state" i18n:translate="label_review_status">Review status</label>
+
+                <div class="formHelp" i18n:translate="help_search_review_status">
+                As a reviewer, you may search for items based on their
+                review state. If you wish to constrain results to items
+                in certain states, select them from this list.
+                </div>
+    
+                <span class="optionsToggle" tal:define="tabindex tabindex/next">
+                <input type="checkbox"
+                       onclick="javascript:toggleSelect(this, 'review_state', true);"
+                       name="rs_toggle"
+                       value="#"
+                       id="rs_toggle"
+                       class="noborder"
+                       checked="checked"
+                       tabindex=""
+                       tal:attributes="tabindex tabindex;"/>
+                <label for=""
+                       i18n:translate="label_toggle"
+                       tal:attributes="for string:rs_toggle"
+                       >Select All/None
+                </label>
+                <br />
+                </span>
+                <tal:states tal:repeat="state python:portal.portal_catalog.uniqueValuesFor('review_state')">
+                    <metal:block tal:define="tabindex tabindex/next">
+                    <input type="checkbox"
+                           name="review_state"
+                           value="#"
+                           checked="checked"
+                           class="noborder"
+                           tabindex=""
+                           tal:attributes="value state;
+                                           tabindex tabindex;
+                                           id string:review_state_${tabindex}"/>
+                    <label for=""
+                           i18n:translate=""
+                           tal:content="state"
+                           tal:attributes="for string:review_state_${tabindex}" />
+                    <br />
+                    </metal:block>
+                </tal:states>
+            </div>
+
+            <div class="formControls">
+                <input class="context"
+                       tabindex=""
+                       type="submit"
+                       name="submit"
+                       value="Search"
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next;"
+                       />
+            </div>
+
+        <!-- build up the path request to search only under the specified folder -->
+        <input type="hidden" name="path" value=""
+               tal:define="compl_path string:${portal_url}/${search_path};
+                           portal here/portal_url/getPortalObject;
+                           path python: '/%s/%s' %(portal.getId(), '/'.join(compl_path.split('/')[3:]));"
+               tal:attributes="value path"
+               tal:condition="root"/>
+        <!-- add these to make sure that after a search result, we still have these parameters -->
+        <input type="hidden" name="fieldName" value="" tal:attributes="value fieldName" />
+        <input type="hidden" name="at_uid" value="" tal:attributes="value at_uid" />
+        <input type="hidden" name="browse_uid" value="" tal:attributes="value browse_uid" />
+        <input type="hidden" name="form_submitted" value="1" />
+    </form>
+
+    <div metal:use-macro="here/bibrefbrowser_macros/macros/bibrefs_popup-buttons" />
+
+<!-- <div tal:content="structure request"/> -->
+
+    </div>
+  </body>
+</html>

@@ -61,16 +61,14 @@ class BiblioListTool(UniqueObject, Folder):
 
     security.declarePrivate('getBibrefStyleNames')
     def getBibrefStyleNames(self):
-        """ returns a list with the names of the 
-            available bibref styles
+        """ returns a list with the names of the available bibref styles
         """
         return [bibrefStyle.getFormatName()
                 for bibrefStyle in self.objectValues()]
 
     security.declareProtected(CMFCorePermissions.View, 'formatList')
     def formatList(self, uids, style):
-        """ renders BibliographyList referenced objects
-            in the specified style
+        """ renders BibliographyList referenced objects in the specified style
         """
         at_tool = getToolByName(self, 'archetype_tool')
         objs = [at_tool.lookupObject(uid) for uid in uids]

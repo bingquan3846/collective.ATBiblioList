@@ -22,33 +22,82 @@ from Products.Archetypes.public import BaseContent
 from Products.Archetypes.public import ReferenceField, ReferenceWidget
 from Products.Archetypes.public import StringField, SelectionWidget
 from Products.Archetypes.Widget import TypesWidget
-from Products.Archetypes.Registry import registerWidget
+from Products.Archetypes.Registry import registerWidget, registerPropertyType
 
 # possible types of bibliographic references from module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
 
-from config import LISTING_VALUES
+from config import LISTING_VALUES, REFERENCE_ALLOWED_TYPES
 
 class BibrefListWidget(TypesWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
-        'macro' : "widget_bibreflist",
+        'macro': "widget_bibreflist",
         })
 
 registerWidget(BibrefListWidget)
 
-schema = BaseSchema + Schema((
+class BibrefBrowserWidget(ReferenceWidget):
+    """This Widget is based on D. Bloemendaal's ATReferenceBrowserWidget"""
+    _properties = ReferenceWidget._properties.copy()
+    _properties.update({
+        'macro': "widget_bibrefbrowser",
+        'helper_js': ('bibrefbrowser.js',),
+        'helper_css': ('popupbrowser.css',),
+        'root': '',
+        'default_search_index': 'SearchableText',
+        })
+
+registerWidget(BibrefBrowserWidget,
+               title='Bibliography Reference Browser',
+               description=('Reference widget that allows to browse or search the portal for Bibliographycal References.'),
+               used_for=('Products.Archetypes.Field.ReferenceField',)
+               )
+
+registerPropertyType('root', 'string', BibrefBrowserWidget)
+registerPropertyType('default_search_index', 'string', BibrefBrowserWidget)
+
+NewSchema = BaseSchema.copy()
+NewSchema['title'].widget.size = 60
+
+schema = NewSchema + Schema((
     ReferenceField('references_list',
                    multiValued=1,
                    relationship='lists reference',
-                   widget=BibrefListWidget(label="References",
-                                           label_msgid="label_references_list",
-                                           description_msgid="help_references_list",
-                                           i18n_domain="plone",
-                                           description="Search and select references to add to the list or organize/remove listed references.",
-                                           ),
+                   allowed_types=REFERENCE_ALLOWED_TYPES,
+                   widget=BibrefBrowserWidget(label="Bibliographical References",
+                      label_msgid="label_references_list",
+                      description_msgid="help_references_list",
+                      description="Click the 'Browse...' button to search/select references and add them to the list, or select references and click the 'Remove selected items' button to remove them from the list. Don't forget to save your changes.",
+                      i18n_domain="plone",
+                      ),
                    ),
+    # old widget
+    #ReferenceField('references_list',
+    #               multiValued=1,
+    #               relationship='lists reference',
+    #               allowed_types=REFERENCE_ALLOWED_TYPES,
+    #               widget=BibrefListWidget(label="References",
+    #                  label_msgid="label_references_list",
+    #                  description_msgid="help_references_list",
+    #                  description="Search and select references to add to the list or organize/remove listed references.",
+    #                  i18n_domain="plone",
+    #                  ),
+    #               ),
+    StringField('ListingLayout',
+                multiValued=0,
+                default = "bulletted",
+                vocabulary=LISTING_VALUES,
+                enforce_vocabulary=1,
+                widget=SelectionWidget(label="Listing Layout",
+                              label_msgid="label_bibliolist_listing_format",
+                              description_msgid="help_bibliolist_listing_format",
+                              description="How the list will be rendered in the view page.",           
+                              i18n_domain="plone",
+                              format="pulldown",
+                              visible={'edit':'visible','view':'invisible'},),
+                ),
     StringField('PresentationStyle',
                 multiValued=0,
                 default = 'stl_minimal',
@@ -60,19 +109,6 @@ schema = BaseSchema + Schema((
                               description="Select the format how you want to present your list.",           
                               i18n_domain="plone",
                               format="select",
-                              visible={'edit':'visible','view':'invisible'},),
-                ),
-    StringField('ListingLayout',
-                multiValued=0,
-                default = 'bulletted',
-                vocabulary=LISTING_VALUES,
-                enforce_vocabulary=1,
-                widget=SelectionWidget(label="Listing Layout",
-                              label_msgid="label_bibliolist_listing_format",
-                              description_msgid="help_bibliolist_listing_format",
-                              description="How the list will be rendered in the view page.",           
-                              i18n_domain="plone",
-                              format="radio",
                               visible={'edit':'visible','view':'invisible'},),
                 ),
     ))

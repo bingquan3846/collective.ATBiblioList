@@ -61,7 +61,7 @@ schema = BaseSchema + Schema((
               widget=BibrefLayoutWidget(label='Format',
                                 label_msgid="label_refpresentation_formatandorder",
                                 description_msgid="help_refpresentation_formatandorder",
-                                description=' Give the desired format of the bibliographic reference.',
+                                description='Format of the bibliographic reference using the following conventions.',
                                 i18n_domain="plone")
               ),
     StringField('nameOrder',

@@ -34,30 +34,20 @@ Add Bibliography References to the list
 
   Once you created a Bibliography List and gave it a title (required),
   you can start adding Bibliography References to it.
-  Note that in the 'edit' page of the list, there is a list called
-  'Listed References' that should be empty at this time.
-  Just below that empty list, there is a small search form from which you
-  can search for Bibliography References that are stored in the portal.
-  Simply fill the search field with search terms and click the 'search'
-  button.
-  If the search result is not empty, a new list will appear on the page
-  displaying the matching Bibliography References. You can select from
-  that list the ones that you want to add to your Bibliography List, and
-  click the 'add to list' button.
-  Note that this action actually saves the added references.
-  It means that the 'cancel' button does not work for that action.
-  This behavior is planned to be changed as soon as we have time for that.
+  Click on the 'Browse...' button present on the 'edit' page of the list.
+  A popup window shows out, from which you can browse all bibliography
+  folders that you can access, or perform specific searches to find the
+  bibliographycal references that you want to add to the list.
+  When done close the popup window, and don't forget to save your changes.
 
 Remove Bibliography References from the list
 
   Once you've added some Bibliography References to your Bibliography
-  List, you can see them in the 'Listed References' list on the 'edit'
-  page.
+  List, you can see them in the 'Bibliographycal References' list on the
+  'edit' page.
   If you need to remove one or more references, just select them and click
-  the 'Remove' button.
-  Note that as for adding references, this action actually saves the list.
-  It means that the 'cancel' button does not work for that action.
-  This behavior is planned to be changed as soon as we have time for that.
+  the 'Remove selected items' button.
+  Once more, don't forget to save your changes.
 
 Display the Bibliography References
 

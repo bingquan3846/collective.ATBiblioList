@@ -14,6 +14,8 @@
 
 from Products.Archetypes.public import DisplayList
 
+from Products.CMFBibliographyAT.config import REFERENCE_TYPES
+
 formcontroller_transitions = (
     {'object_id'    : 'base_edit',
      'status'       : 'success',
@@ -50,6 +52,8 @@ formcontroller_transitions = (
      'action_type'  : 'traverse_to',
      'action_arg'   : 'string:bibliography_list_edit'},
     )
+
+REFERENCE_ALLOWED_TYPES = [tn.replace(' Reference', 'Reference') for tn in REFERENCE_TYPES]
 
 LISTING_VALUES = DisplayList((
     ('bulleted', 'Bulleted list'),
