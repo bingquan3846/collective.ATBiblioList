@@ -23,7 +23,7 @@
                                 has_uid python:hasattr(item.aq_explicit, 'UID');
                                 referenceable python:has_uid and item_referenceable;" 
                     tal:attributes="class python:test(oddrow, 'even', 'odd')">
-                  <td>
+                  <td style="width:16px;">
                     <img src="#"
                          class="typeIcon"
                          tal:attributes="src string:${here/portal_url}/${item/getIcon};alt item/Title" />
@@ -35,6 +35,7 @@
                     <span tal:replace="structure item/Source|nothing"/>
                   </td>
                   <td nowrap="nowrap"
+                      style="width:16px;"
                       tal:define="title python:here.bibrefSelectionLabel(item).replace('\'', '\\\'')">
                     <tal:add_or_choose condition="referenceable"
                         tal:define="multi field/multiValued|nothing;">
