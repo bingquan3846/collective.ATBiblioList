@@ -63,15 +63,20 @@ class MLABibrefStyle(BibrefStyle):
                 formatted_entry += '. '
 
             title = refValues.get('title')
+            title_link = refValues.get('title_link')
+            if title_link:
+                title = '<a href="%s">%s</a>' % (title_link, title)
             journal = refValues.get('journal')
             booktitle = refValues.get('booktitle')
-            if journal:
-                formatted_entry += '"%s." <i>%s.</i>.' % (title,journal)
-            elif booktitle:
-                formatted_entry += '"%s." <i>%s.</i>' % (title,booktitle)
+            if journal or booktitle:
+                if journal: tmp = journal
+                else: tmp = booktitle
+                formatted_entry += '"%s." <i>%s.</i>' % (title,tmp)
             else:
-                formatted_entry += '<i>%s.</i>' % (title)
-
+                if title_link:
+                    formatted_entry += '<a href="%s"><i>%s.</i></a>' % (title_link, title)
+                else:
+                    formatted_entry += '<i>%s.</i>' % (title)
 
             if entry_type == 'ArticleReference':
                 # volume & number

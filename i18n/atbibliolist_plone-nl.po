@@ -60,83 +60,73 @@ msgid "Table listing"
 msgstr "Tabelvorm"
 
 #: widget_bibrefbrowser.pt
-#            <input type="button" 
+#            <input type="button"
 #                   class="context"
-#                   value="Browse..." 
-#XXX: to be translated
+#                   value="Browse..."
 msgid "Browse..."
-msgstr ""
+msgstr "Bladeren..."
 
 #: widget_bibrefbrowser.pt
-#            <input type="button" 
-#                   class="standalone" 
-#                   value="Remove reference" 
-#XXX: to be translated
+#            <input type="button"
+#                   class="standalone"
+#                   value="Remove reference"
 msgid "Remove reference"
-msgstr ""
+msgstr "Referentie verwijderen"
 
 #: widget_bibrefbrowser.pt
-#            <input type="button" 
-#                   class="standalone" 
-#                   value="Remove selected items" 
-#XXX: to be translated
+#            <input type="button"
+#                   class="standalone"
+#                   value="Remove selected items"
 msgid "Remove selected items"
-msgstr ""
+msgstr "Geselecteerde voorwerpen verwijderen"
 
 #: popup_bibrefbrowser.pt
 #        <strong><span i18n:translate="heading_bibliofolders">Bibliography Folders</span></strong>
-#XXX: to be translated
 msgid "heading_bibliofolders"
-msgstr "All Bibliography Folders"
+msgstr "Bibliographische mappen"
 
 #: popup_bibrefbrowser.pt
 #        <strong><span i18n:translate="heading_bibfolder_contents">Folder Contents</span><span>:</span></strong>
-#XXX: to be translated
 msgid "heading_bibfolder_contents"
-msgstr "Folder Contents"
+msgstr "Inhoud Map"
 
 #: bibrefbrowser_macros.pt
 #                       <strong i18n:translate="bibrefbrowser_choose">Choose</strong>
-#XXX: to be translated
 msgid "bibrefbrowser_choose"
-msgstr ""
+msgstr "Selecteer"
 
 #: bibrefbrowser_macros.pt
 #                       <strong i18n:translate="bibrefbrowser_add">Add</strong>
-#XXX: to be translated
 msgid "bibrefbrowser_add"
-msgstr ""
+msgstr "Toevoegen"
 
 #: bibrefbrowser_macros.pt
-#          <input type="button" 
+#          <input type="button"
 #                 value="Close window"
-#XXX: to be translated
 msgid "Close window"
-msgstr "Close window"
+msgstr "Venster sluiten"
 
 #: bibrefbrowser_macros.pt
-#          <input type="button" 
-#                 value="" 
-#                 class="standalone" 
+#          <input type="button"
+#                 value=""
+#                 class="standalone"
 #                 onclick=""
 #                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
 #                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
 #                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
-#XXX: to be translated
 msgid "Clear Search"
-msgstr "Clear Search"
+msgstr "Stop Zoeken"
 
 #: bibrefbrowser_macros.pt
-#          <input type="button" 
-#                 value="" 
-#                 class="standalone" 
+#          <input type="button"
+#                 value=""
+#                 class="standalone"
 #                 onclick=""
 #                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
 #                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
 #                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
-#XXX: to be translated
 msgid "Back to Folders"
-msgstr "Back to Folders"
+msgstr "Terug naar mappen"
 
 #: widget_bibreflist.pt
 #.            <th class="nosort" i18n:translate="header_bibrefs_listing">
@@ -263,8 +253,8 @@ msgid "heading_pubref_download"
 msgstr "Download de bibliografische referencies"
 
 #: listDownloadForm.pt
-#.    <p i18n:translate="description_pubref_download"> 
-#.      Select the format from the drop-down list. Confirm by clicking 
+#.    <p i18n:translate="description_pubref_download">
+#.      Select the format from the drop-down list. Confirm by clicking
 #.      <span i18n:name="download"><strong i18n:translate="">download</strong></span>.
 #.    </p>
 msgid "description_pubref_download"
@@ -310,35 +300,42 @@ msgstr "Inhoud van de filesystem map"
 # references_list
 msgid "label_references_list"
 msgstr "Bibliografische Referenties"
-#XXX: to be modified
 msgid "help_references_list"
-msgstr "Kiest de verwijzingen die u in uw lijst wilt toevoegen/verwijderen."
+msgstr "Klik op de knop 'Selecteer' om de zo gekozen referenties aan de lijst toe te voegen, of selecteer de te wissen referenties en klik op de knop 'Geselecteerde voorwerpen verwijderen'."
 
 #: BibliographyList.py
 # PresentationStyle
-msgid "label_presentation"
+msgid "label_bibliolist_presentation"
 msgstr "Bibliographische stijl"
-msgid "help_presentation"
+#XXX_modified
+msgid "help_bibliolist_presentation"
 msgstr "Kies de stijl om uw lijst te tonen."
 
 #: BibliographyList.py
 # ListingLayout
-msgid "label_bibliolist_listing_format"
+msgid "label_bibliolist_listing_layout"
 msgstr "Stijl van de lijst"
-msgid "help_bibliolist_listing_format"
+#XXX_modified
+msgid "help_bibliolist_listing_layout"
 msgstr "Hoe de lijst getoond wordt in het in het zichtpagina."
 
-
+#: BibliographyList.py
+# linkToOriginalRef
+#XXX_new
+msgid "label_bibliolist_linkToOriginalRef"
+msgstr ""
+msgid "help_bibliolist_linkToOriginalRef"
+msgstr ""
 
 #: BibrefCustomStyleSet.py
-# DefaultStyle 
+# DefaultStyle
 msgid "label_styleset_default"
 msgstr "Standaard presentatiestijl"
 msgid "help_styleset_default"
 msgstr "Kies de stadaard bibliografische stijl om uw lijst te presenteren."
- 
+
 #: BibrefCustomStyleSet.py
-# dynamic list of reference types 
+# dynamic list of reference types
 msgid "help_styleset_list"
 msgstr "Kies de bibliografische stijl om uw lijst te presenteren voor dit type van referentie."
 
@@ -348,9 +345,8 @@ msgstr "Kies de bibliografische stijl om uw lijst te presenteren voor dit type v
 # refDisplay
 msgid "label_refpresentation_formatandorder"
 msgstr "Formaat"
-#XXX: To be modified
 msgid "help_refpresentation_formatandorder"
-msgstr "Geef het gewenste formaat voor de bibliographische verwijzingen. Om een 'veld' voor te stellen gebruikt u de volgende symbolen: Auteur: %A | Titel: %T | Publicatiemaand: %m | Publicatiejaar: %y | Nieuwsblad: %J | Instelling: %I | Organisatie: %O | Titel van het boek: %B | Paginas: %p | Volumenummer: %v | Nummer: %n | Redacteur(s): %E | Redacteuraanwijzer: %F | Uitgever: %P | Adres: %a | Pmid: %i | Editie/druk: %e | Uitgavewijze: %h | Hoofdstuk: %c | School: %S | Prepublicatie server: %r | Reeks: %s | '%' Symbool: %%"
+msgstr "Formaat voor de bibliographische referenties met behulp van de volgende symbolen."
 
 #: BibrefCustomStyle.py
 # nameOrder
@@ -395,70 +391,70 @@ msgid "help_refpresentation_lastnameseparatorformat"
 msgstr "Het scheidingsteken (of woord) dat tussen de 2 laatste auteurs komt te staan. (Spaties ingegrepen)"
 
 #: BibrefCustomStyle.py
-# withAuthorUrl 
+# withAuthorUrl
 msgid "label_refpresentation_authorswithurl"
 msgstr "Auteurs met homepage."
 msgid "help_refpresentation_authorswithurl"
 msgstr "Vink dit aan als de auteurs naar hun URL (als de URL bestaat) moeten verwijzen."
 
 #: BibrefCustomStyle.py
-# titleFormat 
+# titleFormat
 msgid "label_refpresentation_titleformat"
 msgstr "Titel van de publicatie(%T)"
 msgid "help_refpresentation_titleformat"
 msgstr "Kies een voorstellingswijze voor de titel van de publicatie."
- 
+
 #: BibrefCustomStyle.py
-# withTitleUrl 
+# withTitleUrl
 msgid "label_refpresentation_titleurl"
 msgstr "Titel met URL"
 msgid "help_refpresentation__titleurl"
 msgstr "Vink dit aan als de titel naar zijn URL (als de URL bestaat) moet verwijzen."
 
 #: BibrefCustomStyle.py
-# journalFormat 
+# journalFormat
 msgid "label_refpresentation_journalformat"
 msgstr "Nieuwsblad (%J)"
 msgid "help_refpresentation_journalformat"
 msgstr "Kies een voorstellingswijze voor de naam van het nieuwsblad."
 
 #: BibrefCustomStyle.py
-# pagesFormat 
+# pagesFormat
 msgid "label_refpresentation_pagesformat"
 msgstr "Paginas (%p)"
 msgid "help_refpresentation_pagesformat"
 msgstr "Kies een voorstellingswijze voor de paginanummers."
 
 #: BibrefCustomStyle.py
-# volumeFormat 
+# volumeFormat
 msgid "label_refpresentation_volumeformat"
 msgstr "Volumenummer (%v)"
 msgid "help_refpresentation_volumeformat"
 msgstr "Kies een voorstellingswijze voor het volumenummer."
 
 #: BibrefCustomStyle.py
-# chapterFormat 
+# chapterFormat
 msgid "label_refpresentation_chapterformat"
 msgstr "Hoofdstuk (%c)"
 msgid "help_refpresentation_chapterformat"
 msgstr "Kies een voorstellingswijze voor het hoofdstuknummer."
 
 #: BibrefCustomStyle.py
-# numberFormat 
+# numberFormat
 msgid "label_refpresentation_numberformat"
 msgstr "Nieuwsblad-, magazine-, of rapportnummer (%n)"
 msgid "help_refpresentation_numberformat"
 msgstr "Kies een voorstellingswijze voor het nummer van het magazine, nieuwsblad of rapport."
 
 #: BibrefCustomStyle.py
-# seriesFormat 
+# seriesFormat
 msgid "label_refpresentation_seriesformat"
 msgstr "Reeksnaam(%s)"
 msgid "help_refpresentation_seriesformat"
 msgstr "Kies een voorstellingswijze voor de naam van de reeks."
 
 #: BibrefCustomStyle.py
-# bookTitleFormat 
+# bookTitleFormat
 msgid "label_refpresentation_booktitleformat"
 msgstr "Boektitel (voor referenties naar een deel van een boek) (%B)"
 msgid "help_refpresentation_booktitleformat"

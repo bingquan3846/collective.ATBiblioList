@@ -65,7 +65,11 @@ class HarvardBibrefStyle(BibrefStyle):
                 formatted_entry += 'n.d.).'
 
             # title
-            formatted_entry += ' %s.' % refValues.get('title')
+            title = refValues.get('title')
+            title_link = refValues.get('title_link')
+            if title_link:
+                title = '<a href="%s">%s</a>'  % (title_link, title)
+            formatted_entry += ' %s.' % title
 
             # books 
             if entry_type == 'BookReference' or entry_type[:2] == 'In':

@@ -67,10 +67,10 @@ class MinimalBibrefStyle(BibrefStyle):
                 formatted_entry += ' (%s):' % refValues.get('publication_year')
 
             # title
-            absolute_url = refValues.get('absolute_url')
+            title_link = refValues.get('title_link')
             title = refValues.get('title')
-            if absolute_url:
-                title = ' <a href="%s">%s</a>.' % (absolute_url, title)
+            if title_link:
+                title = ' <a href="%s">%s</a>.' % (title_link, title)
             formatted_entry = formatted_entry + ' ' + title
 
             #source

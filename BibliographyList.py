@@ -21,6 +21,7 @@ from Products.Archetypes.public import BaseSchema, Schema
 from Products.Archetypes.public import BaseContent
 from Products.Archetypes.public import ReferenceField, ReferenceWidget
 from Products.Archetypes.public import StringField, SelectionWidget
+from Products.Archetypes.public import BooleanField, BooleanWidget
 from Products.Archetypes.Widget import TypesWidget
 from Products.Archetypes.Registry import registerWidget, registerPropertyType
 
@@ -91,9 +92,9 @@ schema = NewSchema + Schema((
                 vocabulary=LISTING_VALUES,
                 enforce_vocabulary=1,
                 widget=SelectionWidget(label="Listing Layout",
-                              label_msgid="label_bibliolist_listing_format",
-                              description_msgid="help_bibliolist_listing_format",
-                              description="How the list will be rendered in the view page.",           
+                              label_msgid="label_bibliolist_listing_layout",
+                              description_msgid="help_bibliolist_listing_layout",
+                              description="Listing Format.",           
                               i18n_domain="plone",
                               format="pulldown",
                               visible={'edit':'visible','view':'invisible'},),
@@ -103,14 +104,22 @@ schema = NewSchema + Schema((
                 default = 'stl_minimal',
                 vocabulary="vocabCustomStyle",
                 enforce_vocabulary=1,
-                widget=SelectionWidget(label="Presentation Style",
-                              label_msgid="label_presentation",
-                              description_msgid="help_presentation",
-                              description="Select the format how you want to present your list.",           
+                widget=SelectionWidget(label="Bibliographical Style",
+                              label_msgid="label_bibliolist_presentation",
+                              description_msgid="help_bibliolist_presentation",
+                              description="Bibliographical Style used for display.",
                               i18n_domain="plone",
                               format="select",
                               visible={'edit':'visible','view':'invisible'},),
                 ),
+    BooleanField('linkToOriginalRef',
+                 widget=BooleanWidget(label="Link to Original Reference",
+                              label_msgid="label_bibliolist_linkToOriginalRef",
+                              description_msgid="help_bibliolist_linkToOriginalRef",
+                              description="Should the bibliographical reference title be a link to the original bibliographical reference?",
+                              i18n_domain="plone",
+                              visible={'edit':'visible','view':'invisible'},),
+                 ),
     ))
 
 

@@ -295,17 +295,24 @@ msgstr "Cliquez sur le bouton 'Choisir...' pour sélectionner les références à aj
 
 #: BibliographyList.py
 # PresentationStyle
-msgid "label_presentation"
+msgid "label_bibliolist_presentation"
 msgstr "Style de mise en page"
-msgid "help_presentation"
-msgstr "Style d'affichage des références bibliographiques."
+msgid "help_bibliolist_presentation"
+msgstr "Style de présentation bibliographique."
 
 #: BibliographyList.py
 # ListingLayout
-msgid "label_bibliolist_listing_format"
+msgid "label_bibliolist_listing_layout"
 msgstr "Style de la liste"
-msgid "help_bibliolist_listing_format"
-msgstr "Présentation de la liste."
+msgid "help_bibliolist_listing_layout"
+msgstr "Format de liste."
+
+#: BibliographyList.py
+# linkToOriginalRef
+msgid "label_bibliolist_linkToOriginalRef"
+msgstr "Lien vers la référence originale"
+msgid "help_bibliolist_linkToOriginalRef"
+msgstr "Le titre de la référence bibliographique doit-il être un lien vers la référence originale?"
 
 #: BibrefCustomStyleSet.py
 # DefaultStyle 

@@ -133,7 +133,7 @@ dummy_refs = (
  'authors': ({'firstname': 'David', 'middlename': 'B.', 'lastname': 'Fogel'},
              {'firstname': 'Charles', 'middlename': 'J.', 'lastname': 'Robinson'}),
  'organisation': 'IEEE Press',
- 'publisher': 'Wiley Interscience}'
+ 'publisher': 'Wiley Interscience'
  },
 {'ref_type':'Techreport',
  'id': 'WisMal96a',

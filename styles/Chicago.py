@@ -63,17 +63,27 @@ class ChicagoBibrefStyle(BibrefStyle):
                 formatted_entry += ', '
 
             # title
-            if refValues.get('journal'):
-                formatted_entry += '"%s" <i>%s</i>' % (refValues.get('title'),
-                                                       refValues.get('journal'))
-                if refValues.get('number'):
-                    formatted_entry += ' no. %s,' % refValues.get('number')
+            title = refValues.get('title')
+            title_link = refValues.get('title_link')
+            journal = refValues.get('journal')
+            booktitle = refValues.get('bookTitle')
+            if journal:
+                if title_link:
+                    title = '<a href="%s">%s</a>' % (title_link, title)
+                formatted_entry += '"%s" <i>%s</i>' % (title, journal)
+                number = refValues.get('number')
+                if number:
+                    formatted_entry += ' no. %s,' % number
                 else: formatted_entry += ','
-            elif refValues.get('bookTitle'):
-                formatted_entry += '"%s" in <i>%s</i>.' % (refValues.get('title'),
-                                                          refValues.get('bookTitle'))
+            elif booktitle:
+                if title_link:
+                    title = '<a href="%s">%s</a>' % (title_link, title)
+                formatted_entry += '"%s" in <i>%s</i>.' % (title, bookTitle)
             else:
-                formatted_entry += '<i>%s</i>.' % refValues.get('title')
+                if title_link:
+                    formatted_entry += '<a href="%s"><i>%s</i></a>.' % (title_link, title)
+                else:
+                    formatted_entry += '<i>%s</i>.' % title
 
             # series
             if refValues.get('series'):

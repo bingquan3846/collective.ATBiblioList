@@ -297,17 +297,24 @@ msgstr "Click the 'Browse...' button to search/select references and add them to
 
 #: BibliographyList.py
 # PresentationStyle
-msgid "label_presentation"
-msgstr "Bibliography Style"
-msgid "help_presentation"
-msgstr "The style the list will be rendered in."
+msgid "label_bibliolist_presentation"
+msgstr "Bibliographical Style"
+msgid "help_bibliolist_presentation"
+msgstr "Bibliographical Style used for display."
 
 #: BibliographyList.py
 # ListingLayout
-msgid "label_bibliolist_listing_format"
+msgid "label_bibliolist_listing_layout"
 msgstr "Listing Layout"
-msgid "help_bibliolist_listing_format"
-msgstr "How the list will be rendered in the view page."
+msgid "help_bibliolist_listing_layout"
+msgstr "Listing Format."
+
+#: BibliographyList.py
+# linkToOriginalRef
+msgid "label_bibliolist_linkToOriginalRef"
+msgstr "Link to Original Reference"
+msgid "help_bibliolist_linkToOriginalRef"
+msgstr "Should the bibliographical reference title be a link to the original bibliographical reference?"
 
 #: BibrefCustomStyleSet.py
 # DefaultStyle 

@@ -67,12 +67,12 @@ class BiblioListTool(UniqueObject, Folder):
                 for bibrefStyle in self.objectValues()]
 
     security.declareProtected(CMFCorePermissions.View, 'formatList')
-    def formatList(self, uids, style):
+    def formatList(self, uids, style, title_link=None):
         """ renders BibliographyList referenced objects in the specified style
         """
         at_tool = getToolByName(self, 'archetype_tool')
         objs = [at_tool.lookupObject(uid) for uid in uids]
-        uflist = [self.getEntryDict(obj) for obj in objs]
+        uflist = [self.getEntryDict(obj, title_link) for obj in objs]
         formatted_list = [self.formatDicoRef(obj, style)
                           for obj in self.sortBibrefDictList(uflist)]
         return tuple(formatted_list)
@@ -123,7 +123,7 @@ class BiblioListTool(UniqueObject, Folder):
         return tuple(styles)
 
     security.declarePrivate('getEntryDict')
-    def getEntryDict(self, entry):
+    def getEntryDict(self, entry, title_link):
         """ transform a BiblioRef Object into python dictionnary
         """
         ref_attributes = ('publication_year',
@@ -177,8 +177,9 @@ class BiblioListTool(UniqueObject, Folder):
                 except:
                     values[attr] = unicode(value,'utf-8')
         values['source'] = unicode(entry.Source(),'utf-8')
-        values['absolute_url'] = unicode(entry.absolute_url(),'utf-8')
-        values['meta_type'] = unicode(entry.meta_type,'utf-8') 
+        values['meta_type'] = entry.meta_type
+        if title_link:
+            values['title_link'] = '/'.join(entry.getPhysicalPath())
         return values
 
 InitializeClass(BiblioListTool)

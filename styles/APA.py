@@ -79,10 +79,17 @@ class APABibrefStyle(BibrefStyle):
                 formatted_entry += '(%s).' % refValues.get('publication_year')
             
             # title
+            entry_title = refValues.get('title')
+            title_link = refValues.get('title_link')
             if entry_type == 'ArticleReference' or entry_type[:2] == 'In':
-                formatted_entry += ' %s.' % refValues.get('title')
+                if title_link:
+                    entry_title = '<a href="%s">%s</a>' % (title_link, entry_title)
+                formatted_entry += ' %s.' % entry_title
             else:
-                formatted_entry += ' <i>%s</i>' % refValues.get('title')
+                if title_link:
+                    formatted_entry += ' <a href="%s"><i>%s</i></a>' % (title_link, entry_title)
+                else:
+                    formatted_entry += ' <i>%s</i>' % entry_title
     
             # 'In' part
             if entry_type[:2] == 'In':
