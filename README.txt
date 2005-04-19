@@ -39,7 +39,8 @@ Requirements
 
   * Plone 2+ / Archetypes 1.2.5+
   
-  * CMFBibliographyAT (cvs.sourceforge.net:/cvsroot/collective)
+  * CMFBibliographyAT (svn.plone.org/svn/collective
+    used to be cvs.sourceforge.net:/cvsroot/collective)
 
   * Epoz 0.8.x
 
