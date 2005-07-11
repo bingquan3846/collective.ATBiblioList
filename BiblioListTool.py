@@ -67,11 +67,11 @@ class BiblioListTool(UniqueObject, Folder):
                 for bibrefStyle in self.objectValues()]
 
     security.declareProtected(CMFCorePermissions.View, 'formatList')
-    def formatList(self, uids, style, title_link=None):
+    def formatList(self, refs, style, title_link=None):
         """ renders BibliographyList referenced objects in the specified style
         """
-        at_tool = getToolByName(self, 'archetype_tool')
-        objs = [at_tool.lookupObject(uid) for uid in uids]
+#        at_tool = getToolByName(self, 'archetype_tool')
+        objs = [ref.getTargetObject() for ref in refs];
         uflist = [self.getEntryDict(obj, title_link) for obj in objs]
         formatted_list = [self.formatDicoRef(obj, style)
                           for obj in self.sortBibrefDictList(uflist)]

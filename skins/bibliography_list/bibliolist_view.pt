@@ -5,14 +5,7 @@
 <body>
 
 <metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main"
-            define="bl_tool here/portal_bibliolist;
-                    style here/getPresentationStyle;
-                    field python:here.getField('references_list');
-                    uids python:getattr(here, field.edit_accessor)();
-                    list_layout here/getListingLayout|nothing;
-                    t_link here/getLinkToOriginalRef;
-                    formatted_list python:bl_tool.formatList(uids, style, t_link)" >
+    <tal:main-macro metal:define-macro="main">
 
         <h1 tal:content="here/title_or_id" class="documentFirstHeading">
           Title or id
@@ -27,10 +20,15 @@
             description
         </div>
 
-        <div tal:condition="not:formatted_list"
-             i18n:translate="bibliolist_nothing_listed">
-             No bibliographycal reference listed..
-        </div>
+        <metal:listing define-macro="biliolist-listing"
+                    tal:define="field python:here.getField('references_list');
+                            refs python:here.getReferenceImpl(field.relationship);
+                            style here/getPresentationStyle;
+                            list_layout here/getListingLayout|nothing;
+                            t_link here/getLinkToOriginalRef;
+                            bl_tool here/portal_bibliolist;
+                            formatted_list python:bl_tool.formatList(refs, style, t_link)"
+                    tal:condition="refs">
 
         <tal:bibliolist condition="formatted_list">
           <ul tal:condition="python:list_layout=='bulleted'">
@@ -38,7 +36,7 @@
             <li tal:content="structure ref" />
             </tal:block>
           </ul>
-    
+
           <ol tal:condition="python:list_layout=='ordered'">
             <tal:block repeat="ref formatted_list">
             <li tal:content="structure ref" />
@@ -49,7 +47,7 @@
                tal:condition="python:list_layout=='lines'">
             <span tal:replace="structure ref" />
           </div>
-    
+
           <table class="listing" tal:condition="python:list_layout=='table'">
             <thead>
               <tr>
@@ -68,6 +66,14 @@
             </tbody>
           </table>
         </tal:bibliolist>
+
+
+        <div tal:condition="not:formatted_list"
+             i18n:translate="bibliolist_nothing_listed">
+             No bibliographycal reference listed..
+        </div>
+
+      </metal:listing>
 
         <div metal:use-macro="here/document_byline/macros/byline">
           Get the byline - contains details about author and modification date.

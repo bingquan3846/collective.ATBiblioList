@@ -45,7 +45,7 @@ class MinimalBibrefStyle(BibrefStyle):
 
         entry_type = refValues.get('meta_type')
         if not entry_type:
-            entry_type = refValues.get('ref_type')+'Reference'
+            entry_type = str(refValues.get('ref_type'))+'Reference'
 
         if entry_type in REFERENCE_TYPES:
             #authors
