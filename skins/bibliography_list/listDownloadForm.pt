@@ -39,7 +39,7 @@
 
           <select name="format" size="1"
                   tal:attributes="tabindex tabindex/next;">
-            <option tal:repeat="value python:here.portal_bibliography.getDownloadFormats()"
+            <option tal:repeat="value python:here.portal_bibliography.getExportFormats()"
                     tal:content="python:value[0]"
                     tal:attributes="value python:value[1]"> dummy format
             </option>
