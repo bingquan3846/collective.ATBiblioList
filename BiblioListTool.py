@@ -55,9 +55,16 @@ class BiblioListTool(UniqueObject, Folder):
         self._setObject('APA', APABibrefStyle('APA', ''))
 
     def all_meta_types(self):
-        return filter(lambda x: IBibrefStyle \
-                      in x.get('interfaces', []),
-                      Products.meta_types)
+        product_infos = Products.meta_types
+        possibles = []
+        for p in product_infos:
+            try:
+                if IBibrefStyle in p.get('interfaces', []):
+                    possibles.append(p)
+            except TypeError:
+                pass
+        definites = map(lambda x: x.meta_type, self.objectValues())
+        return filter(lambda x,y=definites: x['name'] not in y, possibles)
 
     security.declarePrivate('getBibrefStyleNames')
     def getBibrefStyleNames(self):
