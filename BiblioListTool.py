@@ -186,7 +186,7 @@ class BiblioListTool(UniqueObject, Folder):
         values['source'] = unicode(entry.Source(),'utf-8')
         values['meta_type'] = entry.meta_type
         if title_link:
-            values['title_link'] = '/'.join(entry.getPhysicalPath())
+            values['title_link'] = entry.absolute_url()
         return values
 
 InitializeClass(BiblioListTool)
