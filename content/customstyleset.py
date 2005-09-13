@@ -11,6 +11,7 @@
 """ BibrefCustomStyleSet: combining multiple BibrefCustomStyles to allow 
     each type of reference to have its own presentation format.
 """
+__old_name__ = 'Products.ATBiblioList.BibrefCustomstyleSet'
 
 from AccessControl import ClassSecurityInfo
 
@@ -24,7 +25,7 @@ from Products.Archetypes.public import BaseContent, registerType
 from Products.Archetypes.Widget import SelectionWidget
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
-from BibrefStyle import IBibrefStyle
+from Products.ATBiblioList.interface import IBibrefStyle
 
 schema = BaseSchema + Schema((
     StringField('DefaultStyle',
@@ -66,7 +67,7 @@ def buildStyleSetSchema():
     return Schema(presentation_set_schema) 
     
 class BibrefCustomStyleSet(BaseContent):
-    """ Class combining multiple BibrefCustomStyles 
+    """ Specific Bibliographical Styles 
     """
     __implements__ = (IBibrefStyle ,)
 
@@ -77,6 +78,7 @@ class BibrefCustomStyleSet(BaseContent):
     schema = schema + buildStyleSetSchema()
 
     actions = (
+
         {'id'          : 'view',
          'name'        : 'View',
          'action'      : 'string:${object_url}/bibrefstyle_view',

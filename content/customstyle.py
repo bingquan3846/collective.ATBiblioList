@@ -27,7 +27,7 @@ from Products.Archetypes.public import BooleanField, BooleanWidget
 from Products.Archetypes.Widget import TypesWidget
 from Products.Archetypes.Registry import registerWidget
 
-from BibrefStyle import IBibrefStyle
+from Products.ATBiblioList.interface import IBibrefStyle
 
 from Products.ATBiblioList.config import *
 #from Products.ATBiblioList.dummy_refs import dummy_refs
@@ -223,6 +223,7 @@ if HASDOCUTILS:
                           description_msgid="help_refpresentation_numberformat",
                           i18n_domain="plone"),
                 ),))
+
 schema = schema + Schema((
     StringField('seriesFormat',
                 searchable=0, 
@@ -249,8 +250,7 @@ schema = schema + Schema((
     ))
         
 class BibrefCustomStyle(BaseContent):
-    """ object permitting to define a presentation format.
-    """
+    """Bibliography Style"""
     __implements__ = (IBibrefStyle ,)
 
     archetype_name = "Bibref Custom Style"

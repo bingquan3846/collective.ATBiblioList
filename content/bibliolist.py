@@ -10,7 +10,6 @@
 
 """ BibliographyList: personal list of bibliographic references
 """
-
 from AccessControl import ClassSecurityInfo
 
 from Products.CMFCore import CMFCorePermissions
@@ -28,7 +27,7 @@ from Products.Archetypes.Registry import registerWidget, registerPropertyType
 # possible types of bibliographic references from module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
 
-from config import LISTING_VALUES, REFERENCE_ALLOWED_TYPES
+from Products.ATBiblioList.config import LISTING_VALUES, REFERENCE_ALLOWED_TYPES
 
 class BibrefListWidget(TypesWidget):
     """ custom widget for TTW references input handling """
@@ -74,6 +73,7 @@ schema = NewSchema + Schema((
                       i18n_domain="plone",
                       ),
                    ),
+
     # old widget
     #ReferenceField('references_list',
     #               multiValued=1,
@@ -86,6 +86,7 @@ schema = NewSchema + Schema((
     #                  i18n_domain="plone",
     #                  ),
     #               ),
+
     StringField('ListingLayout',
                 multiValued=0,
                 default = "bulletted",
@@ -99,6 +100,7 @@ schema = NewSchema + Schema((
                               format="pulldown",
                               visible={'edit':'visible','view':'invisible'},),
                 ),
+
     StringField('PresentationStyle',
                 multiValued=0,
                 default = 'stl_minimal',
@@ -112,6 +114,7 @@ schema = NewSchema + Schema((
                               format="select",
                               visible={'edit':'visible','view':'invisible'},),
                 ),
+
     BooleanField('linkToOriginalRef',
                  widget=BooleanWidget(label="Link to Original Reference",
                               label_msgid="label_bibliolist_linkToOriginalRef",
@@ -124,8 +127,7 @@ schema = NewSchema + Schema((
 
 
 class BibliographyList(BaseContent):
-    """ Bibliography list class 
-    """
+    """Bibliography list"""
 
     archetype_name = "Bibliography List"
 
@@ -140,13 +142,14 @@ class BibliographyList(BaseContent):
          'action'      : 'string:${object_url}/bibliolist_view',
          'permissions' : (CMFCorePermissions.View,)
          },
-        {'id'          : 'listdownload',
-         'name'        : 'Download',
-         'action'      : 'listDownloadForm',
+        {'id'          : 'exportBib',
+         'name'        : 'Export Bibliography',
+         'action'      : 'string:${object_url}/listDownloadForm',
          'permissions' : (CMFCorePermissions.View, ),
-         'category'    : 'object',
+         'category'    : 'document_actions',
          },
                )
+
     security = ClassSecurityInfo()
 
     security.declareProtected(CMFCorePermissions.View, 'searchMatchingReferences')

@@ -20,17 +20,19 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject
 
+from Products.ATContentTypes.tool.topic import ATTopicsTool
+
 # ATBiblioList stuff
-from BibrefStyle import IBibrefStyle
-from styles.Minimal import MinimalBibrefStyle
-from styles.Chicago import ChicagoBibrefStyle
-from styles.Harvard import HarvardBibrefStyle
-from styles.MLA import MLABibrefStyle
-from styles.APA import APABibrefStyle
+from Products.ATBiblioList.interface import IBibrefStyle
+from Products.ATBiblioList.styles.Minimal import MinimalBibrefStyle
+from Products.ATBiblioList.styles.Chicago import ChicagoBibrefStyle
+from Products.ATBiblioList.styles.Harvard import HarvardBibrefStyle
+from Products.ATBiblioList.styles.MLA import MLABibrefStyle
+from Products.ATBiblioList.styles.APA import APABibrefStyle
 
 import Products
 
-class BiblioListTool(UniqueObject, Folder):
+class BiblioListTool(UniqueObject, Folder, ATTopicsTool):
     """ Tool for managing format rendering for references 
         contained in the biblio list.
     """
