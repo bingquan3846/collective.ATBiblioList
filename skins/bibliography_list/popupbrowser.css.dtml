@@ -92,10 +92,6 @@ img.typeIcon {
   background: &dtml-backgroundColor; url(&dtml-portal_url;/search_icon.gif) 2px 1px no-repeat;
 }
 
-option {
-/*  font-family: courier, serif; */
-  font-size: 90%;
-}
 
 #archetypes-fieldname-ListingLayout {
   float: right;

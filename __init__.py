@@ -24,15 +24,10 @@ ADD_CONTENT_PERMISSION = AddPortalContent
 
 registerDirectory('skins', GLOBALS)
 
+import content
+from tool import bibliolist as tool
+
 def initialize(context):
-    """ Import Types here to register them """
-    import BibliographyList
-#    import BibliographyTopic
-    import BibrefCustomStyleFolder
-    import BibrefCustomStyle
-    import BibrefCustomStyleSet
-    import BiblioListTool
-    import styles
 
     content_types, constructors, ftis = process_types(
         listTypes(PROJECTNAME),
@@ -46,7 +41,7 @@ def initialize(context):
         fti                = ftis,
         ).initialize(context)
 
-    tools = ( BiblioListTool.BiblioListTool, )
+    tools = (tool.BiblioListTool,)
 
     utils.ToolInit(
         'BiblioList Tool', tools=tools,
@@ -54,3 +49,5 @@ def initialize(context):
         ).initialize(context)
 
     styles.initialize(context)
+
+import modulealiases

@@ -21,13 +21,12 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
 
 # Bibliolist stuff
-from Products.ATBiblioList.BibrefStyle import IBibrefStyle, BibrefStyle
+from base import BibrefStyle
 
 
 class ChicagoBibrefStyle(BibrefStyle):
     """ specific formatter to process input in Chicago format
     """
-    __implements__ = (IBibrefStyle,)
 
     meta_type = "Chicago Bibref Style"
 

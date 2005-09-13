@@ -18,6 +18,14 @@ from Products.ATBiblioList.config import formcontroller_transitions
 #
 # Install functions
 #
+
+def installDependencies(self, out):
+    qi = getToolByName(self, 'portal_quickinstaller')
+    for productname in ('CMFBibliographyAT',):
+        if qi.isProductInstallable(productname) \
+        and not qi.isProductInstalled(productname):
+            qi.installProduct(productname)
+
 def addCustomFormControllerTransitions(self, out):
     """ Add predefined custom form_controller transitions
     """
@@ -33,7 +41,7 @@ def fixContentTab(self,out):
         if 'PresentationFolder' not in use_folder_tabs:
             use_folder_tabs += ('PresentationFolder', )
             pp.site_properties.manage_changeProperties(
-	        {'use_folder_tabs' : use_folder_tabs},
+                {'use_folder_tabs' : use_folder_tabs},
                 )
 
 def setupTool(self, out):
@@ -51,19 +59,20 @@ def install(self):
     """
     out=StringIO()
 
+    installDependencies(self, out)
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
     install_subskin(self, out, GLOBALS)
 
     addCustomFormControllerTransitions(self, out)
-    
+
     fixContentTab(self,out)
 
     setupTool(self,out)
-    
+
     out.write('Installation completed.\n')
     return out.getvalue()
 
-    
+
 #
 # Uninstall functions
 #
