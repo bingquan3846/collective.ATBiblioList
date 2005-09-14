@@ -24,11 +24,11 @@ from Products.ATContentTypes.tool.topic import ATTopicsTool
 
 # ATBiblioList stuff
 from Products.ATBiblioList.interface import IBibrefStyle
-from Products.ATBiblioList.styles.Minimal import MinimalBibrefStyle
-from Products.ATBiblioList.styles.Chicago import ChicagoBibrefStyle
-from Products.ATBiblioList.styles.Harvard import HarvardBibrefStyle
-from Products.ATBiblioList.styles.MLA import MLABibrefStyle
-from Products.ATBiblioList.styles.APA import APABibrefStyle
+from Products.ATBiblioList.styles.minimal import MinimalBibrefStyle
+from Products.ATBiblioList.styles.chicago import ChicagoBibrefStyle
+from Products.ATBiblioList.styles.harvard import HarvardBibrefStyle
+from Products.ATBiblioList.styles.mla import MLABibrefStyle
+from Products.ATBiblioList.styles.apa import APABibrefStyle
 
 import Products
 
