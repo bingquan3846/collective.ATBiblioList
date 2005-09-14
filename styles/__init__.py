@@ -4,11 +4,11 @@
 #                       and contributors                                 #
 ##########################################################################
 
-from Minimal import MinimalBibrefStyle, manage_addMinimalBibrefStyle
-from Chicago import ChicagoBibrefStyle, manage_addChicagoBibrefStyle
-from MLA import MLABibrefStyle, manage_addMLABibrefStyle
-from APA import APABibrefStyle, manage_addAPABibrefStyle
-from Harvard import HarvardBibrefStyle, manage_addHarvardBibrefStyle
+from minimal import MinimalBibrefStyle, manage_addMinimalBibrefStyle
+from chicago import ChicagoBibrefStyle, manage_addChicagoBibrefStyle
+from mla import MLABibrefStyle, manage_addMLABibrefStyle
+from apa import APABibrefStyle, manage_addAPABibrefStyle
+from harvard import HarvardBibrefStyle, manage_addHarvardBibrefStyle
 
 
 def initialize(context):
