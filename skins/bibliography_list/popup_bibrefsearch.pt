@@ -18,25 +18,11 @@
       tal:attributes="lang default_language|default;
                       xml:lang default_language|default;">
 
-  <head tal:define="ztu modules/ZTUtils;">
-      <title tal:content="widget/label">title</title>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"
-            tal:define="charset here/portal_properties/site_properties/default_charset;
-                        dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
-            tal:attributes="content string:text/html;;charset=${charset}" />
-      <style type="text/css" media="all"
-             tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
-             tal:content="string: @import url(${here/portal_url}/plone.css?${current_skin});">
-      </style>
-      <link rel="stylesheet" type="text/css"
-        media="screen" href=""
-        tal:attributes="href string:$portal_url/popupbrowser.css" />
-      <script type="text/javascript"
-              tal:attributes="src string:$portal_url/plone_javascript_variables.js">
-      </script>
-      <script type="text/javascript"
-              tal:attributes="src string:$portal_url/plone_javascripts.js">
-      </script>
+  <head metal:use-macro="here/header/macros/html_header">
+    <metal:cssslot fill-slot="css_slot">
+    <link rel="stylesheet" type="text/css" media="screen" href=""
+          tal:attributes="href string:$portal_url/popupbrowser.css" />
+    </metal:cssslot>
   </head>
 
   <body>
@@ -147,10 +133,19 @@
                             tal:condition="not: isAnon"
                             tal:attributes="value python:member.getProperty('last_login_time')"
                             i18n:translate="last_login">Last log-in</option>
-                    <option value="#" tal:attributes="value yesterday" i18n:translate="time_yesterday"> Yesterday </option>
-                    <option value="#" tal:attributes="value lastweek" i18n:translate="time_last_week"> Last week </option>
-                    <option value="#" tal:attributes="value lastmonth" i18n:translate="time_last_month"> Last month </option>
-                    <option value="#" tal:attributes="value ever" selected="selected" i18n:translate="time_ever"> Ever </option>
+                    <option value="#"
+                            tal:attributes="value yesterday"
+                            i18n:translate="time_yesterday">Yesterday</option>
+                    <option value="#"
+                            tal:attributes="value lastweek"
+                            i18n:translate="time_last_week">Last week</option>
+                    <option value="#"
+                            tal:attributes="value lastmonth"
+                            i18n:translate="time_last_month">Last month</option>
+                    <option value="#"
+                            tal:attributes="value ever"
+                            selected="selected"
+                            i18n:translate="time_ever">Ever</option>
                 </select>
                 </tal:datetime>
 
@@ -206,19 +201,21 @@
                            tal:attributes="value python:'/'.join(bibfolder.getPhysicalPath());
                                            tabindex tabindex;
                                            id string:${bibfolder/getId}_${tabindex}"/>
+
                     <label for=""
                            tal:attributes="for string:${bibfolder/getId}_${tabindex}"
-                           tal:define="breadcrumbs python:portal.breadcrumbs(bibfolder)">
+                           tal:define="breadcrumbs python:putils.createBreadCrumbs(bibfolder)">
                       <span tal:replace="bibfolder/title_or_id" />
                       <span style="font-weight: normal;">
                       (<span i18n:translate="tabs_home" tal:omit-tag="">Home</span>
                       &raquo;
-                      <tal:crumb repeat="crumb python:breadcrumbs[1:-1]">
+                      <tal:crumb repeat="crumb breadcrumbs">
                         <tal:last tal:define="is_last repeat/crumb/end">
-                        <span tal:omit-tag="python:not crumb[1]" i18n:translate=""
-                              tal:content="python:crumb[0]">
-                          crumb</span><span tal:condition="is_last" tal:omit-tag="">)</span>
-                        <span tal:condition="not:is_last" tal:omit-tag="">&raquo;</span>
+                        <span tal:content="crumb/Title">
+                          crumb</span>
+                        <span class="breadcrumbSeparator" 
+                              tal:condition="not:is_last" tal:omit-tag="">&raquo;</span>
+                        <span tal:condition="is_last" tal:omit-tag="">)</span>
                         </tal:last>
                       </tal:crumb>
                       </span>
