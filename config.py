@@ -143,6 +143,7 @@ CUSTOM_DISPLAY_CONVENTIONS = (
     ('S', 'School'),
     ('r', 'Preprint sever'),
     ('s', 'Series'),
+    ('t', 'Type'),
     ('%', '"%" sign'),
     )
 
@@ -160,7 +161,7 @@ OLD_CUSTOM_DISPLAY_CONVENTIONS_ROWS = (
 CUSTOM_DISPLAY_CONVENTIONS_ROWS = (
     ('%A', '%O', '%p', '%s'),
     ('%T', '%B', '%a', '%r'),
-    ('%m', '%p', '%i', '%s'),
+    ('%m', '%r', '%i', '%t'),
     ('%y', '%v', '%e', '%%'),
     ('%J', '%n', '%h', ''),
     ('%I', '%E', '%c', ''),
