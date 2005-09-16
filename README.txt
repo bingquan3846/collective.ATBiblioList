@@ -91,6 +91,14 @@ Contact
 
 Changes
 
+  Version 0.4
+
+  * Adapted ATReferenceBrowserWidget for choosing Biblio References to add to the list. References can now be found using an extended search form.
+
+  * Adapted translation files (i18n) and the manual accordingly.
+
+  * Moved the BiblioList sorting process (at display time) to the skins, so that it can be customized either on the File System or Through the web from the ZMI. see skins/bibliography_list/sortBibrefDictList.py .
+
   Version 0.3
 
   * Sort lists by 1st Author name and publication year.
@@ -100,14 +108,6 @@ Changes
   * Added security declarations where needed.
 
   * Better Documentation.
-
-  Version 0.4
-
-  * Adapted ATReferenceBrowserWidget for choosing Biblio References to add to the list. References can now be found using an extended search form.
-
-  * Adapted translation files (i18n) and the manual accordingly.
-
-  * Moved the BiblioList sorting process (at display time) to the skins, so that it can be customized either on the File System or Through the web from the ZMI. see skins/bibliography_list/sortBibrefDictList.py .
 
 To Do
 
