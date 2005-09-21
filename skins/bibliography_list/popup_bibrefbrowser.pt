@@ -120,8 +120,6 @@
 	           accesskey="accesskeys-breadcrumbs">crumb</a>-->
                 <span tal:content="crumb/Title">crumb</span>
                 <span class="breadcrumbSeparator" tal:condition="not: is_last">&raquo;</span>
-                <span tal:condition="is_last"
-                      tal:content="crumb/Title">crumb</span>
              </tal:last>
         </span>
         </tal:define>
@@ -180,8 +178,6 @@
 	                 accesskey="accesskeys-breadcrumbs">crumb</a>-->
                          <span tal:content="crumb/Title">crumb</span>
                       <span class="breadcrumbSeparator" tal:condition="not: is_last"> &raquo;</span>
-                      <span tal:condition="is_last"
-                            tal:content="crumb/Title">crumb</span>
                    </tal:last>
               </span>
 
