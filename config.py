@@ -18,6 +18,8 @@ from Products.Archetypes.public import DisplayList
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
 
+ATBIBLIST_BIBFOLDER_REF = 'ATBiblioList_associated_bibfolder'
+
 formcontroller_transitions = (
     {'object_id'    : 'base_edit',
      'status'       : 'success',

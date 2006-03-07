@@ -25,9 +25,12 @@ from Products.Archetypes.Widget import TypesWidget
 from Products.Archetypes.Registry import registerWidget, registerPropertyType
 
 # possible types of bibliographic references from module 'CMFBibliographyAT'
-from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
+from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types, \
+     FOLDER_TYPES as BIB_FOLDER_TYPES, \
+     ADD_CONTENT_PERMISSION
 
-from Products.ATBiblioList.config import LISTING_VALUES, REFERENCE_ALLOWED_TYPES
+from Products.ATBiblioList.config import LISTING_VALUES, \
+     REFERENCE_ALLOWED_TYPES, ATBIBLIST_BIBFOLDER_REF
 
 class BibrefListWidget(TypesWidget):
     """ custom widget for TTW references input handling """
@@ -123,7 +126,21 @@ schema = NewSchema + Schema((
                               i18n_domain="plone",
                               visible={'edit':'visible','view':'invisible'},),
                  ),
+
+    ReferenceField('associatedBibFolder',
+                   multiValued=0,
+                   relationship=ATBIBLIST_BIBFOLDER_REF,
+                   allowed_types=BIB_FOLDER_TYPES,
+                   widget=ReferenceWidget(label="Associated ",
+                      label_msgid="label_associated_bibfolder",
+                      description_msgid="help_associated_bibfolder",
+                      description="Associates a specific BibliographyFolder with this list for the purpose of uploads only.",
+                      i18n_domain="plone",
+                      ),
+                   ),
+
     ))
+
 
 
 class BibliographyList(BaseContent):
@@ -133,6 +150,7 @@ class BibliographyList(BaseContent):
 
     global_allow = 1
     content_icon = 'biblist_icon.gif'
+    _at_rename_after_creation = True
 
     schema = schema
 
@@ -148,7 +166,14 @@ class BibliographyList(BaseContent):
          'permissions' : (CMFCorePermissions.View, ),
          'category'    : 'document_actions',
          },
-               )
+        {
+        'id'           : 'import',
+        'name'         : 'Import',
+        'action'       : 'string:${object_url}/bibliography_importForm',
+        'permissions'  : (ADD_CONTENT_PERMISSION,),
+        'condition'    : 'python:object.getAssociatedBibFolder() is not None',
+         },
+        )
 
     security = ClassSecurityInfo()
 
@@ -170,5 +195,33 @@ class BibliographyList(BaseContent):
         """
         bltool = getToolByName(self, 'portal_bibliolist')
         return DisplayList(bltool.findBibrefStyles())
+
+    security.declareProtected(ADD_CONTENT_PERMISSION, 'processSingleImport')
+    def processSingleImport(self, entry, infer_references=True):
+        """
+        """
+        bf = self.getAssociatedBibFolder()
+        # No need to put in a security check on the 'real' context (i.e. bf)
+        # here because bf.processSingleImport(...) calls self.invokeFactory(...)
+        # which has security built-in.
+        report_line, import_status, ob = bf.processSingleImport(entry, infer_references)
+        # This is just for clarity
+        out = (report_line, import_status, ob )
+        # XXX Ick, this should be something better than testing the value of a string.
+        # BibliographyFolder.processSingleImport should probably be refactored to raise an exception.
+        if import_status == 'ok':
+            refs = self.getReferences_list()
+            refs.append(ob)
+            self.setReferences_list(refs)
+        return out
+
+    security.declareProtected(ADD_CONTENT_PERMISSION, 'logImportReport')
+    def logImportReport(self, report):
+        """Store the import report.
+        """
+        # Just pass off the import report to the place that actually did the importing.
+        # XXX Should have a security check here though!
+        self.getAssociatedBibFolder().logImportReport(report)
+
 
 registerType(BibliographyList)
