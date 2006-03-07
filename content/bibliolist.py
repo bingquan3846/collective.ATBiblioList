@@ -204,7 +204,7 @@ class BibliographyList(BaseContent):
         # No need to put in a security check on the 'real' context (i.e. bf)
         # here because bf.processSingleImport(...) calls self.invokeFactory(...)
         # which has security built-in.
-        report_line, import_status, ob = bf.processSingleImport(entry, infer_references)
+        report_line, import_status, ob = bf.processSingleImport(entry, infer_references=infer_references)
         # This is just for clarity
         out = (report_line, import_status, ob )
         # XXX Ick, this should be something better than testing the value of a string.
