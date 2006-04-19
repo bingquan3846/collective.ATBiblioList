@@ -1,1 +1,1 @@
-svn/trunk (unreleased)
+0.8
