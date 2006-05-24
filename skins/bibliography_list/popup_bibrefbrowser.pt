@@ -141,7 +141,7 @@
     <!-- Bibliography Folders Browsing -->
     <div class="field"
          tal:condition="python: not form_submitted and not browse_uid"
-         tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder'),sort_on='Date',sort_order='reverse');
+		 tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder', 'Ordered Bibliography Folder', 'LargeBibliographyFolder'),sort_on='Date',sort_order='reverse');
                      bibfolders python:[r for r in bibfolders if r.getObject()];">
       <div tal:condition="not:bibfolders"
            i18n:translate="msg_no_bibliofolder">
