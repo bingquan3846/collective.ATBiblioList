@@ -52,6 +52,7 @@ class BibrefBrowserWidget(ReferenceWidget):
         'default_search_index': 'SearchableText',
         })
 
+
 registerWidget(BibrefBrowserWidget,
                title='Bibliography Reference Browser',
                description=('Reference widget that allows to browse or search the portal for Bibliographycal References.'),
