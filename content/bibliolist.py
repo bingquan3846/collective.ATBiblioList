@@ -12,7 +12,7 @@
 """
 from AccessControl import ClassSecurityInfo
 
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore import permissions as CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.public import DisplayList, registerType

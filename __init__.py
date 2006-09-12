@@ -10,7 +10,7 @@
 
 """ package installer for ATBiblioList """
 
-from Products.CMFCore.CMFCorePermissions import AddPortalContent
+from Products.CMFCore.permissions import AddPortalContent
 
 from Products.Archetypes.public import process_types, listTypes
 from Products.CMFCore import utils

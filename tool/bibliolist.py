@@ -16,7 +16,7 @@ from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
 
 # CMF stuff
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore import permissions as CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject
 
