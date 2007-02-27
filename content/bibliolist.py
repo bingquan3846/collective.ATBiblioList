@@ -66,7 +66,6 @@ class BibrefBrowserWidget(ReferenceWidget):
         'default_search_index': 'SearchableText',
         })
 
-
 registerWidget(BibrefBrowserWidget,
                title='Bibliography Reference Browser',
                description=('Reference widget that allows to browse or search the portal for Bibliographycal References.'),
@@ -283,8 +282,8 @@ class BibliographyList(BaseContent):
     def vocabCustomStyle(self):
         """ build a DisplayList based on existing styles
         """
-        bltool = getToolByName(self, 'portal_bibliolist')
-        return DisplayList(bltool.findBibrefStyles())
+        bstool = getToolByName(self, 'portal_bibliostyles') or None
+        return DisplayList(bstool.findBibrefStyles())    
 
     security.declareProtected(ADD_CONTENT_PERMISSION, 'processSingleImport')
     def processSingleImport(self, entry, infer_references=True, **kwargs):
@@ -322,5 +321,6 @@ class BibliographyList(BaseContent):
         # Just pass off the import report to the place that actually did the importing.
         # XXX Should have a security check here though!
         self.getAssociatedBibFolder().logImportReport(report, **kwargs)
+
 
 registerType(BibliographyList)
