@@ -12,8 +12,6 @@
     (these lists are used in the selection boxes in formatting files)
 """
 
-TOOLNAME = "portal_bibliolist"
-
 from Products.Archetypes.public import DisplayList
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES

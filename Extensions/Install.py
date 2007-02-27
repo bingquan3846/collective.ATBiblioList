@@ -13,7 +13,6 @@ from cStringIO import StringIO
 
 from Products.ATBiblioList import PROJECTNAME, GLOBALS
 from Products.ATBiblioList.config import formcontroller_transitions
-#from Products.ATBiblioList.styles.Minimal import MinimalBibrefStyle
 
 #
 # Install functions
@@ -21,7 +20,7 @@ from Products.ATBiblioList.config import formcontroller_transitions
 
 def installDependencies(self, out):
     qi = getToolByName(self, 'portal_quickinstaller')
-    for productname in ('CMFBibliographyAT',):
+    for productname in ('CMFBibliographyAT','ATBiblioStyles',):
         if qi.isProductInstallable(productname) \
         and not qi.isProductInstalled(productname):
             qi.installProduct(productname)
@@ -44,16 +43,6 @@ def fixContentTab(self,out):
                 {'use_folder_tabs' : use_folder_tabs},
                 )
 
-def setupTool(self, out):
-    """ adds the bibliolist tool to the portal root folder
-    """
-    if hasattr(self, 'portal_bibliolist'):
-        self.manage_delObjects(['portal_bibliolist'])
-        out.write('Deleting old tool; make sure you repeat customizations.')
-    addTool = self.manage_addProduct['ATBiblioList'].manage_addTool
-    addTool('BiblioList Tool', None)
-    out.write("\nAdded the bibliolist tool to the portal root folder.\n")
-
 def install(self):
     """ Main install function
     """
@@ -66,8 +55,6 @@ def install(self):
     addCustomFormControllerTransitions(self, out)
 
     fixContentTab(self,out)
-
-    setupTool(self,out)
 
     out.write('Installation completed.\n')
     return out.getvalue()

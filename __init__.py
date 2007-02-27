@@ -25,7 +25,6 @@ ADD_CONTENT_PERMISSION = AddPortalContent
 registerDirectory('skins', GLOBALS)
 
 import content
-from tool import bibliolist as tool
 
 def initialize(context):
 
@@ -40,14 +39,5 @@ def initialize(context):
         extra_constructors = constructors,
         fti                = ftis,
         ).initialize(context)
-
-    tools = (tool.BiblioListTool,)
-
-    utils.ToolInit(
-        'BiblioList Tool', tools=tools,
-        product_name='ATBiblioList', icon='bib_tool.gif',
-        ).initialize(context)
-
-    styles.initialize(context)
 
 import modulealiases
