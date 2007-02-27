@@ -6,8 +6,8 @@
         global at_uid python:here.REQUEST.get('at_uid');
         global fieldName python:here.REQUEST.get('fieldName');
         global at_obj python:here.reference_catalog.lookupObject(at_uid);
-        global field python:at_obj.Schema()[fieldName];
-        global widget python:field.widget;" />
+        global field python: at_obj and at_obj.Schema()[fieldName];
+        global widget python: field and field.widget;" />
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
       lang="en"
@@ -27,6 +27,7 @@
 
   <body onload="focus()">
 
+  <tal:edit tal:condition="at_obj">
   <div id="content"
        tal:define="allowed_types python:list(field.allowed_types);
                    search_path widget/root;
@@ -141,7 +142,7 @@
     <!-- Bibliography Folders Browsing -->
     <div class="field"
          tal:condition="python: not form_submitted and not browse_uid"
-		 tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder', 'Ordered Bibliography Folder', 'LargeBibliographyFolder'),sort_on='Date',sort_order='reverse');
+         tal:define="bibfolders python:container.portal_catalog(portal_type=('BibliographyFolder', 'Bibliography Folder', 'Ordered Bibliography Folder', 'LargeBibliographyFolder'),sort_on='Date',sort_order='reverse');
                      bibfolders python:[r for r in bibfolders if r.getObject()];">
       <div tal:condition="not:bibfolders"
            i18n:translate="msg_no_bibliofolder">
@@ -214,7 +215,7 @@
         There are no existing Bibliography References in this folder, or you don't have enough permissions to list them.
       </div>
 
-      <tal:results define="bibrefs python:bibrefFolderObj.listFolderContents();
+      <tal:results define="bibrefs python:bibrefFolderObj.listFolderContents(contentFilter={'portal_type': here.portal_bibliography.getReferenceTypes(), });
                            sort_on python:(('Authors', 'nocase', 'asc'),('publication_year', 'cmp', 'desc'));
                            results python:sequence.sort(bibrefs, sort_on);"
                    condition="results">
@@ -226,6 +227,28 @@
 
 <!-- <div tal:content="structure request"/> -->
 
-    </div>
+  </div>
+  </tal:edit>
+    
+  <div id="content" style="font-size:120%;" tal:condition="not: at_obj">
+
+    <h1>Creating a new Bibliography List</h1>
+
+    <p>
+    Your are creating a new Bibliography List... 
+    </p>
+    
+    <h3>NOTE:</h3>
+    <p>On Bibliography List creation, it is not possible to select bibliographical entries that are to be shown in this list.
+    To add bibliographical references later, proceed as follows:</p>
+    <ul>
+    <li>Fill out all the other fields of the new bibliography list</li>
+    <li>Save your new Bibliography List</li>
+    <li>Edit the Bibliography List again</li>
+    <li>Return to this bibliography browser to add items to your bibliography list</li>
+    </ul>
+    <p>This issue only occurs on sites that use the Plone's Factory Tool for Bibliography List creation.</p>
+  </div>
+ 
   </body>
 </html>

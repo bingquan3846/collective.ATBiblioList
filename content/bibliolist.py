@@ -12,17 +12,31 @@
 """
 from AccessControl import ClassSecurityInfo
 
-from Products.CMFCore import permissions as CMFCorePermissions
+from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
 
-from Products.Archetypes.public import DisplayList, registerType
-from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import BaseContent
-from Products.Archetypes.public import ReferenceField, ReferenceWidget
-from Products.Archetypes.public import StringField, SelectionWidget
-from Products.Archetypes.public import BooleanField, BooleanWidget
-from Products.Archetypes.Widget import TypesWidget
-from Products.Archetypes.Registry import registerWidget, registerPropertyType
+try:
+    from Products.LinguaPlone.public import DisplayList, registerType
+    from Products.LinguaPlone.public import BaseSchema, Schema
+    from Products.LinguaPlone.public import BaseContent
+    from Products.LinguaPlone.public import ReferenceField, ReferenceWidget
+    from Products.LinguaPlone.public import StringField, SelectionWidget
+    from Products.LinguaPlone.public import BooleanField, BooleanWidget
+    from Products.LinguaPlone.public import TextField, RichWidget, TextAreaWidget
+    from Products.LinguaPlone.Widget import TypesWidget
+    from Products.LinguaPlone.Registry import registerWidget, registerPropertyType 
+except:
+    from Products.Archetypes.public import DisplayList, registerType
+    from Products.Archetypes.public import BaseSchema, Schema
+    from Products.Archetypes.public import BaseContent
+    from Products.Archetypes.public import ReferenceField, ReferenceWidget
+    from Products.Archetypes.public import StringField, SelectionWidget
+    from Products.Archetypes.public import BooleanField, BooleanWidget
+    from Products.Archetypes.public import TextField, RichWidget, TextAreaWidget
+    from Products.Archetypes.Widget import TypesWidget
+    from Products.Archetypes.Registry import registerWidget, registerPropertyType 
+
+from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import ReferenceBrowserWidget
 
 # possible types of bibliographic references from module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types, \
@@ -62,14 +76,55 @@ registerWidget(BibrefBrowserWidget,
 registerPropertyType('root', 'string', BibrefBrowserWidget)
 registerPropertyType('default_search_index', 'string', BibrefBrowserWidget)
 
+relatedItemsField = ReferenceField('relatedItems',
+        relationship = 'relatesTo',
+        multiValued = True,
+        isMetadata = True,
+        languageIndependent = False,
+        index = 'KeywordIndex',
+        write_permission = permissions.ModifyPortalContent,
+        widget = ReferenceBrowserWidget(
+                        allow_search = True,
+                        allow_browse = True,
+                        show_indexes = False,
+                        force_close_on_insert = False,
+                        label = "Related Item(s)",
+                        label_msgid = "label_related_items",
+	                description = "Reference other items on your site here.",
+	                description_msgid = "help_related_items",
+	                i18n_domain = "plone",
+	                visible = {'edit' : 'visible', 'view' : 'invisible' },
+	),
+)
+
+#NewSchema = Schema(tuple([ field.copy() for field in BaseSchema.fields() if field.getName() != 'description' ]))
 NewSchema = BaseSchema.copy()
 NewSchema['title'].widget.size = 60
 
+NewSchema['description'].schemata = 'default'
+NewSchema.moveField('description', after='title')
+
 schema = NewSchema + Schema((
+    TextField('biblioListHeader',
+                searchable = True,
+                required=0,
+                default_content_type='text/html',
+                default_output_type='text/x-html-captioned',
+                allowable_content_types=('text/html',),
+                widget=RichWidget(
+                        label='Bibliography List Header',
+                        label_msgid='label_bibliolist_header',
+                        description='',
+                        description_msgid='"help_bibliolist_header',
+                        i18n_domain = 'atbibliolist',
+                        rows=8,
+                ),
+    ),
     ReferenceField('references_list',
                    multiValued=1,
                    relationship='lists reference',
                    allowed_types=REFERENCE_ALLOWED_TYPES,
+		   languageIndependent = True,
                    widget=BibrefBrowserWidget(label="Bibliographical References",
                       label_msgid="label_references_list",
                       description_msgid="help_references_list",
@@ -96,6 +151,7 @@ schema = NewSchema + Schema((
                 default = "bulletted",
                 vocabulary=LISTING_VALUES,
                 enforce_vocabulary=1,
+		languageIndependent = True,
                 widget=SelectionWidget(label="Listing Layout",
                               label_msgid="label_bibliolist_listing_layout",
                               description_msgid="help_bibliolist_listing_layout",
@@ -110,6 +166,7 @@ schema = NewSchema + Schema((
                 default = 'stl_minimal',
                 vocabulary="vocabCustomStyle",
                 enforce_vocabulary=1,
+		languageIndependent = True,
                 widget=SelectionWidget(label="Bibliographical Style",
                               label_msgid="label_bibliolist_presentation",
                               description_msgid="help_bibliolist_presentation",
@@ -120,6 +177,7 @@ schema = NewSchema + Schema((
                 ),
 
     BooleanField('linkToOriginalRef',
+                 languageIndependent = True,
                  widget=BooleanWidget(label="Link to Original Reference",
                               label_msgid="label_bibliolist_linkToOriginalRef",
                               description_msgid="help_bibliolist_linkToOriginalRef",
@@ -127,21 +185,46 @@ schema = NewSchema + Schema((
                               i18n_domain="plone",
                               visible={'edit':'visible','view':'invisible'},),
                  ),
-
+    BooleanField('linkToOriginalRefOnlyIfOwner',
+                default = False,
+		languageIndependent = True,
+		widget=BooleanWidget(label="Only Show Link to Original Reference if Owner",
+			      label_msgid="label_bibliolist_linktooriginalrefonlyifowner",
+			      description_msgid="help_bibliolist_linktooriginalrefonlyifowner",
+			      description="If linking to original references is enabled, this switch will narrow the number of linked references down to those items the authenticated user is owner of.",
+			      i18n_domain="atbibliotopic",
+			      visible={'edit':'visible','view':'invisible'},
+		),
+    ),		
     ReferenceField('associatedBibFolder',
-                   multiValued=0,
-                   relationship=ATBIBLIST_BIBFOLDER_REF,
-                   allowed_types=BIB_FOLDER_TYPES,
-                   widget=ReferenceWidget(label="Associated ",
+                multiValued=0,
+                relationship=ATBIBLIST_BIBFOLDER_REF,
+                allowed_types=BIB_FOLDER_TYPES,
+                languageIndependent = True,
+		widget=ReferenceWidget(label="Associated ",
                       label_msgid="label_associated_bibfolder",
                       description_msgid="help_associated_bibfolder",
                       description="Associates a specific BibliographyFolder with this list for the purpose of uploads only.",
                       i18n_domain="plone",
-                      ),
-                   ),
-
+                ),
+    ),            
+    TextField('biblioListFooter',
+                searchable = True,
+                required=0,
+                default_content_type='text/html',
+                default_output_type='text/x-html-captioned',
+                allowable_content_types=('text/html',),
+                widget=RichWidget(
+                        label='Bibliography List Footer',
+                        label_msgid='label_bibliolist_footer',
+                        description='',
+                        description_msgid='"help_bibliolist_footer',
+                        i18n_domain = 'atbibliolist',
+                        rows=8,
+                ),
+    ),
+    relatedItemsField,
     ))
-
 
 
 class BibliographyList(BaseContent):
@@ -159,12 +242,12 @@ class BibliographyList(BaseContent):
         {'id'          : 'view',
          'name'        : 'View',
          'action'      : 'string:${object_url}/bibliolist_view',
-         'permissions' : (CMFCorePermissions.View,)
+         'permissions' : (permissions.View,)
          },
         {'id'          : 'exportBib',
          'name'        : 'Export Bibliography',
-         'action'      : 'string:${object_url}/listDownloadForm',
-         'permissions' : (CMFCorePermissions.View, ),
+         'action'      : 'string:${object_url}/bibliolist_exportForm',
+         'permissions' : (permissions.View, ),
          'category'    : 'document_actions',
          },
         {
@@ -174,11 +257,17 @@ class BibliographyList(BaseContent):
         'permissions'  : (ADD_CONTENT_PERMISSION,),
         'condition'    : 'python:object.getAssociatedBibFolder() is not None',
          },
+        {'id'          : 'local_roles',
+         'name'        : 'Sharing',
+         'action'      : 'string:${object_url}/folder_localrole_form',
+         'permissions' : (permissions.ManageProperties,),
+         'condition'   : 'python: object.portal_membership.checkPermission("ManageProperties", object)',
+	 },
         )
 
     security = ClassSecurityInfo()
 
-    security.declareProtected(CMFCorePermissions.View, 'searchMatchingReferences')
+    security.declareProtected(permissions.View, 'searchMatchingReferences')
     def searchMatchingReferences(self, searchterm):
         """ list existing references but rejects those already referenced
         """
@@ -190,7 +279,7 @@ class BibliographyList(BaseContent):
                    if r.getObject().UID() not in value]
         return refList
     
-    security.declareProtected(CMFCorePermissions.View, 'vocabCustomStyle')
+    security.declareProtected(permissions.View, 'vocabCustomStyle')
     def vocabCustomStyle(self):
         """ build a DisplayList based on existing styles
         """
@@ -198,14 +287,24 @@ class BibliographyList(BaseContent):
         return DisplayList(bltool.findBibrefStyles())
 
     security.declareProtected(ADD_CONTENT_PERMISSION, 'processSingleImport')
-    def processSingleImport(self, entry, infer_references=True):
+    def processSingleImport(self, entry, infer_references=True, **kwargs):
         """
         """
         bf = self.getAssociatedBibFolder()
         # No need to put in a security check on the 'real' context (i.e. bf)
         # here because bf.processSingleImport(...) calls self.invokeFactory(...)
         # which has security built-in.
-        report_line, import_status, ob = bf.processSingleImport(entry, infer_references=infer_references)
+
+        result =  bf.processSingleImport(entry, infer_references=infer_references, **kwargs)
+        if len(result) == 2:
+            # skipped references only return report_line and import_status
+            report_line, import_status = result
+            out = (report_line, import_status, None )
+        elif len(result) == 3:
+            # successfully imported references additionally return an object
+            report_line, import_status, ob = result
+            out = (report_line, import_status, ob )
+                                
         # This is just for clarity
         out = (report_line, import_status, ob )
         # XXX Ick, this should be something better than testing the value of a string.
@@ -217,12 +316,11 @@ class BibliographyList(BaseContent):
         return out
 
     security.declareProtected(ADD_CONTENT_PERMISSION, 'logImportReport')
-    def logImportReport(self, report):
+    def logImportReport(self, report, **kwargs):
         """Store the import report.
         """
         # Just pass off the import report to the place that actually did the importing.
         # XXX Should have a security check here though!
-        self.getAssociatedBibFolder().logImportReport(report)
-
+        self.getAssociatedBibFolder().logImportReport(report, **kwargs)
 
 registerType(BibliographyList)

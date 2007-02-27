@@ -8,12 +8,12 @@
 
     <!-- Bibrefs List Widget -->
     <metal:view_macro define-macro="view"
-        tal:define="bl_tool here/portal_bibliolist;
+        tal:define="bs_tool here/portal_bibliostyles;
                     style here/getPresentationStyle;
                     uids python:getattr(here, field.edit_accessor)();
                     objs python:[here.archetype_tool.lookupObject(uid = uid) for uid in uids];
                     list_layout here/getListingLayout|nothing;
-                    formatted_list python:bl_tool.formatList(uids, style)" >
+                    formatted_list python:bs_tool.formatList(uids, style)" >
 
       <ul tal:condition="python:list_layout=='bulleted'">
         <tal:block repeat="ref formatted_list">

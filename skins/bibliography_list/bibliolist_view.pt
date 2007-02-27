@@ -1,9 +1,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="atbibliolist">
 <body>
-
+<metal:cssslot fill-slot="css_slot">
+    <style type="text/css"
+           media="all">
+       
+         .link-silent { text-decoration: none; }
+                     
+    </style>
+</metal:cssslot>
+                                                                          
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
@@ -23,16 +31,19 @@
              tal:content="here/Description">
             description
         </div>
+        
+        <div tal:condition="here/getBiblioListHeader" tal:content="structure here/getBiblioListHeader" />
 
         <metal:listing define-macro="biliolist-listing"
                     tal:define="field python:here.getField('references_list');
                             refs python:here.getReferenceImpl(field.relationship);
+                            refs python:here.portal_bibliography.filterOutBibEntriesFromNonSearchableBibFolders(refs, object_getmethod='getTargetObject');
                             style here/getPresentationStyle;
                             list_layout here/getListingLayout|nothing;
                             t_link here/getLinkToOriginalRef;
-                            bl_tool here/portal_bibliolist;
-                            formatted_list python:bl_tool.formatList(refs, style, t_link)"
-                    tal:condition="refs">
+                            t_link_owner here/getLinkToOriginalRefOnlyIfOwner;
+                            bs_tool here/portal_bibliostyles;
+                            formatted_list python:bs_tool.formatList(refs, style, instance=here, title_link=t_link, title_link_only_if_owner=t_link_owner)">
 
         <tal:bibliolist condition="formatted_list">
           <ul tal:condition="python:list_layout=='bulleted'">
@@ -71,14 +82,19 @@
           </table>
         </tal:bibliolist>
 
-
         <div tal:condition="not:formatted_list"
              i18n:translate="bibliolist_nothing_listed">
-             No bibliographycal reference listed..
+             No bibliographical reference listed.
         </div>
 
       </metal:listing>
+      
+      <div tal:condition="here/getBiblioListFooter" tal:content="structure here/getBiblioListFooter" />
 
+      <div metal:use-macro="here/document_relateditems/macros/relatedItems">
+        show related items if they exist
+      </div>
+	    
     </tal:main-macro>
 </metal:main>
 

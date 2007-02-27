@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<metal:head metal:fill-slot="javascript_head_slot">
+
+    <metal:bibliography-export-js metal:use-macro="here/bibliography_exportForm/macros/bibliography-export-js" />
+    
+</metal:head>
+
+<body>
+
+  <div metal:fill-slot="main"
+       tal:define="global props python:container.portal_properties;
+                   Iterator python:modules['Products.CMFPlone'].IndexIterator;
+		   bib_tool here/portal_bibliography;
+		   bibliography_export_script string:bibliolist_export;
+                   tabindex python:Iterator();">
+
+    <h1><span tal:omit-tag="" tal:content="here/Title" /> - <span i18n:translate="heading_pubref_download">Export Bibliographic Entries</span></h1>
+
+    <p class="documentDescription" tal:content="here/Description" />
+
+    <metal:bibliography-export-form metal:use-macro="here/bibliography_exportForm/macros/bibliography-export" />
+
+  </div>
+
+</body>
+
+</html>
+
