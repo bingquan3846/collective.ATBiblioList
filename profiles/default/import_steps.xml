@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<import-steps>
+
+ <!-- why isn't this one registered from the CMFFormController product? -->
+ <import-step id="form-controller-tool" version="20070321-01"
+              handler="Products.CMFFormController.exportimport.importCMFFormController"
+              title="Form Controller Tool">
+  <!-- <dependency step="componentregistry"/> -->
+    Import form controller tool definitions
+ </import-step>
+
+</import-steps>
