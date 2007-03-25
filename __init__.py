@@ -18,7 +18,7 @@ from Products.CMFCore.DirectoryView import registerDirectory
 
 PROJECTNAME = 'ATBiblioList'
 GLOBALS = globals()
-skin_names = ('bibliography_list',)
+#skin_names = ('bibliography_list',)
 
 ADD_CONTENT_PERMISSION = AddPortalContent
 
