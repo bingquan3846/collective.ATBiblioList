@@ -12,69 +12,33 @@ Description
   interesting bibliography styles with the community.
 
 
-What It Does
-
-  * Installs the 'Bibliography List' content type.
-
-  * Installs the 'Bibref Custom Style' content type.
-
-  * Installs the 'Bibref Custom Style Set' content type.
-
-  * Installs the 'Bibref Custom Style Folder' content type.
-
-  * Installs the 'portal_bibliolist' tool.
-
-  * Installs FS based Bibref Styles in the 'portal_bibliolist' tool:
-
-    - Minimal: Default minimal bibliography style.
-
-    - APA: American Psychological Association bibliography style.
-    
-    - MLA: Modern Language Association style.
-
-    - Chicago and Harvard styles.
-
-
 Requirements
 
-  * Plone 2+ / Archetypes 1.2.5+
+  * Plone 3.0+
   
-  * CMFBibliographyAT (svn.plone.org/svn/collective
-    used to be cvs.sourceforge.net:/cvsroot/collective)
+  * CMFBibliographyAT (1.0 or svn/trunk)
 
-  * Epoz 0.8.x
+  * ATBiblioStyles (1.0 or svn/trunk)
 
 
 Installation
 
   - First, add the product to Zope:
 
-    * extract the product from its archive and move it to the Products directory of your Zope Instance.
+    * extract the product from its archive and move it to the Products
+      directory of your Zope Instance.
 
   - Then, install the product in Plone:
 
-    * Recommended (Plone way): use the 'QuickInstaller' Tool from the ZMI, or go to 'Plone Setup > Add/Remove Products' in the Plone User Interface. Check the corresponding checkbox and click the 'install' button.
+    * From the Plone interface, log in as manager and go to 'Site Setup' >
+      'Add-on Products'.
+      Check 'ATBiblioStyles' and click Install.
 
-    * Alternate (CMF Manual way): create an external method at the root of your cmf portal and run it by clicking its 'test' tab.
-
-    External Method parameters:
-
-    - Id: InstallATBiblioList
-
-    - Title: Install ATBiblioList (optional)
-
-    - Module Name: InstallATBiblioList.Install
-
-    - Function Name: install
 
 Upgrade
 
-  - If you upgrade from version 0.2, you may have to reinstall the product with the portal_quickinstaller.
-
-
-Documentation
-
-  More documentation can be found in the 'doc' folder of this product.
+  - If you upgrade from earlier version, you may have to reinstall the product
+    with the portal_quickinstaller.
 
 
 Licence
@@ -86,40 +50,16 @@ Contact
 
   David Convent - david.convent(at)naturalsciences(dot)be
 
-  Louis Wannijn - louis.wannijn(at)naturalsciences(dot)be
+  Mailing list for topics about CMFBibliographyAT, its add-on products and
+  bibliography reference management with Plone in general:
+  plone-biblio(at)zaubberer(dot)net.
+  
+  Mailing list registration at:
+  https://zaubberer.net/mailman/listinfo/plone-biblio
 
-
-Changes
-
-  Version 0.4
-
-  * Adapted ATReferenceBrowserWidget for choosing Biblio References to add to the list. References can now be found using an extended search form.
-
-  * Adapted translation files (i18n) and the manual accordingly.
-
-  * Moved the BiblioList sorting process (at display time) to the skins, so that it can be customized either on the File System or Through the web from the ZMI. see skins/bibliography_list/sortBibrefDictList.py .
-
-  Version 0.3
-
-  * Sort lists by 1st Author name and publication year.
-
-  * Complete translation (i18n) support.
-
-  * Added security declarations where needed.
-
-  * Better Documentation.
 
 To Do
 
-  * Write unit tests !!
+  * Write more unit tests !!
 
-  * Export formatted lists in rtf.
-
-  * More BibrefStyles to come: We'll have to write more specific styles in order to meet the needs of our scientific staff.
-
-
-Very possible future:
-
-  * As suggested by a few testers/users, a 'very nice to have' functionnality of a bibliolist is to let the list be dynamically updated, based on previous search criteria.
-    I think the best way to implement such a functionnality would be to make the BiblioList behave like cmf topics do.
-
+  * Enhance UI with ATBiblioTopic features
