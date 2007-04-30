@@ -322,5 +322,20 @@ class BibliographyList(BaseContent):
         # XXX Should have a security check here though!
         self.getAssociatedBibFolder().logImportReport(report, **kwargs)
 
+    security.declareProtected(ADD_CONTENT_PERMISSION, 'getEnableDuplicatesManager')
+    def getEnableDuplicatesManager(self, **kwargs):
+        """Check if the DuplicatesManager is enabled in the assoc. bibfolder
+        """
+        if self.getAssociatedBibFolder():
+            return self.getAssociatedBibFolder().getEnableDuplicatesManager(**kwargs)
+        else:
+            return False
+
+    security.declareProtected(ADD_CONTENT_PERMISSION, 'getDuplicatesMatchingPolicy')
+    def getDuplicatesMatchingPolicy(self, **kwargs):
+        """Retrieve the DuplicatesMatchingPolicy from the assoc. bibfolder
+        """
+        if self.getAssociatedBibFolder():
+            return self.getAssociatedBibFolder().getDuplicatesMatchingPolicy(**kwargs)
 
 registerType(BibliographyList)
