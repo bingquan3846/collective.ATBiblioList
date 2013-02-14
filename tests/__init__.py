@@ -1,0 +1,1 @@
+"""ATBiblioStyles tests package"""

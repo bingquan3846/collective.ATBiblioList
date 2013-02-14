@@ -1,0 +1,69 @@
+ATBiblioList Manual
+
+Product description
+
+  ATBiblioList is an add-on module to Raphael Ritz's CMFBibliographyAT.
+
+  The main purpose of ATBiblioList is to let Plone portal users organize
+  existing Bibliography References into lists that can be exported.
+
+  see README.txt for dependencies, installation instructions, and other
+  basic informations.
+
+Create a Bibliography List
+
+  Bibliography Lists are implicitely addable by default.
+  It means that they can be created from anywhere in the portal unless
+  a portal administrator has changed that behavior.
+  Preferably, those lists will be created by users in their own 'Home
+  Directory' or 'Work Space'.
+  To Add a Bibliography List to the portal, do as for any other Plone
+  content Type: Use the 'Add content' menu or choose 'Bibliography List'
+  and click 'Add' from the content page of the folder you want to add the
+  list in.
+
+Add Bibliography References to the list
+
+  Once you created a Bibliography List and gave it a title (required),
+  you can start adding Bibliography References to it.
+  Click on the 'Browse...' button present on the 'edit' page of the list.
+  A popup window shows out, from which you can browse all bibliography
+  folders that you can access, or perform specific searches to find the
+  bibliographycal references that you want to add to the list.
+  When done close the popup window, and don't forget to save your changes.
+
+Remove Bibliography References from the list
+
+  Once you've added some Bibliography References to your Bibliography
+  List, you can see them in the 'Bibliographical References' list on the
+  'edit' page.
+  If you need to remove one or more references, just select them and click
+  the 'Remove selected items' button.
+  Once more, don't forget to save your changes.
+
+Display the Bibliography References
+
+  Once you've created and populated your Bibliography List, you may want
+  to have it rendered in a way that suits some publishing requirements.
+  If you installed ATBiblioStyles, you can choose the way the list has to be
+  rendered from its edit page. First, you can choose what Bibliographical
+  Style must be respected while displaying the list. The styles that are
+  registered with the BibliographyList Tool are displayed First, then the ones
+  that were defined Through The Web (see further in this manual to learn how
+  to create new bibliography styles).
+  After choosing the Bibliographical Style, you can set the list type
+  (bulleted, ordered, etc..).
+
+Export Bibliography Lists
+
+  CMFBibliographyAT lets you export/download an entire Bibliography
+  Folder or any individual Bibliography Reference contained in such
+  folder.
+  If you want to export only a portion of the Bibliography References
+  contained in one folder, or if you want to export a selection of
+  Bibliography References that are not contained in the same folder, you
+  can use ATBiblioList.
+  You just have to create a list, select the Bibliography References that
+  you want to export, click on the 'download' content tab and choose the
+  format in which you want them to be exported.
+

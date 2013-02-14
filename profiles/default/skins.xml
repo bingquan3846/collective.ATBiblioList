@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="bibliography_list" meta_type="Filesystem Directory View"
+    directory="Products.ATBiblioList:skins/bibliography_list"/>
+ <skin-path name="*">
+  <layer name="bibliography_list"
+     insert-after="custom"/>
+ </skin-path>
+</object>

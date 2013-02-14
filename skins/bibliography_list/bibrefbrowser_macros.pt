@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <head><title></title></head>
+
+  <body>
+    <div metal:fill-slot="main">
+      <metal:main_macro define-macro="main">
+
+        <metal:table_chooser define-macro="bibrefs_table_chooser"
+           tal:define="batch python:Batch(results, 10, int(b_start), orphan=1)">
+          <table class="group" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tal:results tal:repeat="item batch">
+                <tr tal:define="oddrow repeat/item/odd;
+                                uid item/aq_explicit/UID|string:'';
+                                item_referenceable python:(allowed_types!=[] and (item.portal_type in allowed_types) or (allowed_types==[]));
+                                has_uid python:hasattr(item.aq_explicit, 'UID');
+                                referenceable python:has_uid and item_referenceable;" 
+                    tal:attributes="class python:test(oddrow, 'even', 'odd')">
+                  <td style="width:16px;">
+                    <img src="#"
+                         class="typeIcon"
+                         tal:attributes="src string:${here/portal_url}/${item/getIcon};alt item/Title" />
+                  </td>
+                  <td class="bibreflabel">
+                    <span tal:replace="structure item/Authors" >Authors</span>
+                    (<span tal:replace="item/publication_year">1900</span>).<br />
+                    <b tal:content="structure item/Title">Title</b><br />
+                    <span tal:replace="structure item/Source|nothing"/>
+                  </td>
+                  <td nowrap="nowrap"
+                      style="width:16px;"
+                      tal:define="title python:here.bibrefSelectionLabel(item).replace('\'', '\\\'')">
+                    <tal:add_or_choose condition="referenceable"
+                        tal:define="multi field/multiValued|nothing;">
+                    <a href=""
+                       onclick=""
+                       tal:attributes="href string:#;
+                                       onclick string:window.opener.bibrefbrowser_setReference('${fieldName}', '${uid}', '${title}');; window.close();; ;"
+                       tal:condition="not:multi">
+                       <strong i18n:translate="bibrefbrowser_choose">Choose</strong>
+                    </a>
+                    <a href=""
+                       onclick=""
+                       tal:attributes="href string:#;
+                                       onclick string:window.opener.bibrefbrowser_addReference('${fieldName}', '${uid}', '${title}');; ;"
+                       tal:condition="multi">
+                       <strong i18n:translate="bibrefbrowser_add">Add</strong>
+                    </a>
+                    </tal:add_or_choose>
+                  </td>
+                </tr>
+              </tal:results>
+            </tbody>
+          </table>
+          <div metal:use-macro="here/batch_macros/macros/navigation" />
+        </metal:table_chooser>
+
+        <div id="popup-buttons" metal:define-macro="bibrefs_popup-buttons">
+          <input type="button" 
+                 value="Close window" 
+                 class="standalone" 
+                 onclick="javascript:window.close()"
+                 i18n:attributes="value" />
+          <input type="button" 
+                 value="" 
+                 class="standalone" 
+                 onclick=""
+                 tal:define="url_suffix python:test(form_submitted, browse_url_suffix, '');"
+                 tal:attributes="value python:test(form_submitted, 'Clear Search', 'Back to Folders');
+                                 onclick string:javascript:window.location='${here/absolute_url}/${template/getId}?fieldName=$fieldName&at_uid=$at_uid$url_suffix'"
+                 tal:condition="python:form_submitted or browse_uid"
+                 i18n:attributes="value" />
+        </div>
+
+      </metal:main_macro>
+    </div>
+  </body>
+</html>

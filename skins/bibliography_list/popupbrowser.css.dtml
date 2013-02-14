@@ -1,0 +1,107 @@
+/* <dtml-var "enableHTTPCompression(request=REQUEST, debug=1, css=1)"> (this is for http compression) */
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+
+/* POPUP SECTION */
+
+h1 {
+  text-transform: capitalize;
+  border-bottom: None;
+}
+
+dt a {
+  vertical-align: bottom;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+#popup-buttons {
+  float:right;
+  margin-left: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+#popup-searchbox label {
+  vertical-align: bottom;
+}
+
+#popup-status {
+  text-transform: none;
+  padding-left: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-top: 2em;
+  border-top-color: &dtml-globalBorderColor;;
+  border-top-style: &dtml-borderStyle;;
+  border-top-width: &dtml-borderWidth;;
+  border-bottom-color: &dtml-globalBorderColor;;
+  border-bottom-style: &dtml-borderStyle;;
+  border-bottom-width: &dtml-borderWidth;;
+}
+
+#popup-status img{
+  vertical-align: bottom;
+}
+
+#popup-status a,
+#popup-status span {
+  vertical-align: middle;
+}
+
+table.group {
+  width: 100%;
+  margin-top: 1em;
+}
+
+table.group td {
+  vertical-align: top;
+  padding: 2px;
+}
+
+table.group td.bibreflabel {
+  vertical-align: top;
+  padding-right: 1em;
+}
+
+img.typeIcon {
+  vertical-align: top;
+}
+
+.listingBar {
+  margin-right: 0em;
+  width: none;
+}
+
+.discreet {
+  font-color: &dtml-discreetColor;;
+  color: rgb(175,175,175);
+}
+
+
+/* WIDGET SECTION */
+
+.field input.context,
+.field input.standalone {
+  margin-top: 0.7em;
+}
+
+.field input.context {
+  background: &dtml-backgroundColor; url(&dtml-portal_url;/search_icon.gif) 2px 1px no-repeat;
+}
+
+
+#archetypes-fieldname-ListingLayout {
+  float: right;
+  width: 50%;
+}
+
+#archetypes-fieldname-PresentationStyle {
+/*  float: right;
+  width: 50%; */
+}
+
+
+/* </dtml-with> */
